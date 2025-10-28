@@ -1,0 +1,479 @@
+/* style.css */
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #2196F3;
+}
+
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    margin: 0;
+    /* 统一背景图样式，应用到主内容区 */
+    background: url('22222.jpg') center/cover fixed;
+    background-blend-mode: overlay;
+    background-color: rgba(77, 175, 80, 0.3);
+    animation: backgroundEffect 20s ease-in-out infinite;
+}
+
+/* 背景动画效果 */
+@keyframes backgroundEffect {
+    0% {
+        background-size: 100% 100%;
+        background-color: rgba(77, 175, 80, 0.3);
+    }
+    50% {
+        background-size: 110% 110%;
+        background-color: rgba(77, 175, 80, 0.4);
+    }
+    100% {
+        background-size: 100% 100%;
+        background-color: rgba(77, 175, 80, 0.3);
+    }
+}
+
+/* 修改后的.cover样式 */
+.cover {
+    text-align: center;
+    padding: 100px 20px;
+    color: white;
+    position: relative;
+    min-height: 400px; /* 根据图片调整高度 */
+}
+
+
+/* Logo 动画效果 */
+.logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 20px;
+    border: 2px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 5px;
+    border-radius: 10px;
+    position: relative;
+    z-index: 10;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+.logo:hover {
+    transform: rotate(5deg) scale(1.1);
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.3);
+    border-color: var(--primary-color);
+}
+
+/* Logo 浮动动画 */
+@keyframes logoFloat {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(3deg);
+    }
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.nav-buttons button {
+    padding: 10px 28px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 24px;
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    transition: background 0.3s, transform 0.2s;
+}
+
+.nav-buttons button:hover {
+    background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+    transform: translateY(-2px) scale(1.05);
+}
+
+.nav-buttons button.active {
+    background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
+    color: #333;
+    font-weight: bold;
+    box-shadow: 0 4px 16px rgba(250,112,154,0.15);
+}
+
+button {
+    padding: 12px 32px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(67, 233, 123, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(67, 233, 123, 0.3);
+    background: linear-gradient(135deg, #38f9d7 0%, #43e97b 100%);
+}
+
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(67, 233, 123, 0.2);
+}
+
+/* 开始按钮特殊样式 */
+#startBtn {
+    padding: 16px 48px;
+    font-size: 1.4rem;
+    background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+#startBtn:hover {
+    background: linear-gradient(45deg, #FF8E53, #FF6B6B);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(255, 107, 107, 0.4);
+}
+
+/* 提交按钮样式 */
+form button[type="submit"] {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.2);
+    width: 100%;
+    margin-top: 15px;
+}
+
+form button[type="submit"]:hover {
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    box-shadow: 0 6px 20px rgba(79, 172, 254, 0.3);
+}
+
+/* 导航按钮样式 */
+.sub-nav button {
+    padding: 14px 36px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+    margin: 8px;
+}
+
+.sub-nav button:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: translateY(-2px) scale(1.03);
+}
+
+.sub-nav button.active {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    box-shadow: 0 4px 15px rgba(250, 112, 154, 0.2);
+    color: #333;
+    font-weight: 600;
+}
+
+/* 添加按钮点击波纹效果 */
+button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+button:active::after {
+    animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(20, 20);
+        opacity: 0;
+    }
+}
+
+/* 关闭按钮样式 */
+#closeMore {
+    font-size: 24px;
+    color: #666;
+    background: none;
+    padding: 8px;
+    box-shadow: none;
+}
+
+#closeMore:hover {
+    color: #FF6B6B;
+    transform: rotate(90deg);
+    background: none;
+    box-shadow: none;
+}
+
+.content {
+    display: none;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: relative;
+    transform: translateZ(0);
+    transition: transform 0.3s ease-out;
+}
+
+.content:hover {
+    transform: translateZ(50px) scale(1.02);
+}
+
+.content.active {
+    display: block;
+}
+
+.pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+@media (max-width: 600px) {
+    .pros-cons {
+        grid-template-columns: 1fr;
+    }
+}
+
+.input-group {
+    display: grid;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+input, textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 表单按钮美化 */
+#planForm button,
+#recordForm button {
+    padding: 10px 28px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 24px;
+    background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 12px;
+}
+
+#planForm button:hover,
+#recordForm button:hover {
+    background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
+    color: #333;
+    transform: translateY(-2px) scale(1.05);
+    font-weight: bold;
+}
+
+/* logo图标微调 */
+.sub-nav .logo {
+    width: 36px !important;
+    height: 36px !important;
+    margin-bottom: 12px;
+}
+
+/* 选项界面卡片美化 */
+.sub-nav {
+    background: rgba(255,255,255,0.95);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 32px 24px 24px 24px;
+    max-width: 340px;
+    margin: 40px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 0.6s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+.sub-nav .logo {
+    margin-bottom: 20px !important;
+    box-shadow: 0 2px 8px rgba(76,175,80,0.08);
+}
+
+.sub-nav div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: stretch;
+}
+
+.sub-nav button {
+    margin: 0;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(33,150,243,0.08);
+    transition: box-shadow 0.2s, background 0.3s, transform 0.2s;
+}
+
+.sub-nav button:hover,
+.sub-nav button.active {
+    box-shadow: 0 4px 16px rgba(250,112,154,0.15);
+    transform: scale(1.04);
+}
+
+/* 登录弹窗样式 */
+.login-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('22222.jpg') center/cover;
+    background-blend-mode: overlay;
+    background-color: rgba(77, 175, 80, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.login-box {
+    background: rgba(255,255,255,0.95);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 32px 28px;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-box h2 {
+    margin-bottom: 18px;
+    color: #4CAF50;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.login-box button {
+    padding: 10px 32px;
+    border: none;
+    border-radius: 24px;
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    transition: background 0.3s, transform 0.2s;
+}
+
+.login-box button:hover {
+    background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
+    color: #333;
+    transform: scale(1.05);
+}
+
+/* 更多服务弹窗样式 */
+.more-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('22222.jpg') center/cover;
+    background-blend-mode: overlay;
+    background-color: rgba(77, 175, 80, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.more-box {
+    background: rgba(255,255,255,0.97);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 32px 28px;
+    min-width: 320px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.more-box h2 {
+    margin-top: 0;
+    color: #2196F3;
+}
+
+.more-box #closeMore {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 2rem;
+    color: #888;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    transition: color 0.2s;
+}
+.more-box #closeMore:hover {
+    color: #fa709a;
+}
+
+/* 让卡片内容更突出，防止透明导致内容难看清 */
+.sub-nav,
+.content,
+.login-box {
+    background: rgba(255,255,255,0.95);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+}
+
+/* 可选：main区域居中显示 */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 60vh;
+    padding-bottom: 40px;
+}
+
+* {
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+}

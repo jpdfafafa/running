@@ -1,0 +1,130 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>running science - 您的专属跑步管家</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 主界面欢迎语 -->
+    <header class="cover" id="cover">
+        <img src="logo.png" alt="跑步助手LOGO" class="logo">
+        <h1>running science</h1>
+        <h2>开启您的健康跑步之旅</h2>
+        <button id="startBtn">开始</button>
+    </header>
+
+    <!-- 登录弹窗 -->
+    <div class="login-modal" id="loginModal" style="display:none;">
+        <div class="login-box">
+            <h2>用户登录</h2>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="用户名" required>
+                <input type="password" id="password" placeholder="密码" required>
+                <button type="submit">登录</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 选择子界面 -->
+    <nav class="sub-nav" id="subNav" style="display:none; flex-direction: column; align-items: center;">
+        <img src="logo.png" alt="跑步助手LOGO" class="logo" style="width:36px;height:36px;margin-bottom:12px;">
+        <!-- <h2>请选择功能</h2> -->
+        <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
+            <button data-target="advantages">跑步科普</button>
+            <button data-target="plan">计划生成</button>
+            <button data-target="records">跑步记录</button>
+            <button data-target="more">更多服务</button>
+        </div>
+    </nav>
+
+    <!-- 更多服务弹窗 -->
+    <div class="more-modal" id="moreModal" style="display:none;">
+        <div class="more-box">
+            <button id="closeMore" style="float:right;font-size:1.2rem;border:none;background:none;cursor:pointer;">×</button>
+            <section id="contact">
+                <h2>联系我进行指导</h2>
+                <p>如需个性化跑步指导，请发送邮件至 <a href="mailto:yourmail@example.com">yourmail@example.com</a> 或添加微信：your_wechat_id。</p>
+            </section>
+            <section id="wechat">
+                <h2>加入微信群</h2>
+                <p>扫码加入我们的跑步交流群：</p>
+                <img src="code.png" alt="微信群二维码" style="width:200px;">
+            </section>
+            <section id="locations">
+                <h2>附近跑步地点信息</h2>
+                <ul>
+                    <li>洋浦公园 - 距离1.2km，环境优美，适合晨跑</li>
+                    <li>中心体育场 - 距离2.5km，塑胶跑道，开放时间6:00-21:00</li>
+                    <li>学校周围 - 距离3.0km，风景好，适合长距离慢跑</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <!-- 内容模块 -->
+    <main>
+        <!-- 跑步优势模块 -->
+        <section id="advantages" class="content" style="display:none;">
+            <div class="pros-cons">
+                <div class="pros">
+                    <h2>🏃‍♂️ 跑步科普</h2>
+                    <ul>
+                        <li>提升心肺功能，增强心脏和肺部的耐力。</li>
+                        <li>燃烧脂肪（每小时约500-700大卡），有助于减脂塑形。</li>
+                        <li>增强下肢肌肉力量，提高身体协调性和平衡能力。</li>
+                        <li>改善心理健康，释放压力，预防抑郁和焦虑。</li>
+                        <li>促进新陈代谢，帮助调节血糖和血脂。</li>
+                        <li>提高免疫力，减少患病风险。</li>
+                        <li>有助于改善睡眠质量。</li>
+                        <li>适合各年龄段人群，门槛低，场地要求少。</li>
+                        <li>坚持跑步可延缓衰老，提升生活质量。</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h2>⚠️ 注意事项</h2>
+                    <ul>
+                        <li>膝关节压力约为体重的2-3倍，注意保护关节。</li>
+                        <li>建议选择缓冲跑鞋，避免硬地长时间奔跑。</li>
+                        <li>BMI＞28应咨询医生，避免运动损伤。</li>
+                        <li>跑步前做好热身，跑步后适当拉伸。</li>
+                        <li>根据自身情况合理安排跑步强度和距离。</li>
+                        <li>如有心脏病、高血压等慢性疾病，建议在医生指导下进行。</li>
+                        <li>避免空腹或饭后立即跑步。</li>
+                        <li>注意补充水分，防止脱水。</li>
+                        <li>天气恶劣时（如高温、雾霾）建议减少或暂停户外跑步。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 计划生成模块 -->
+        <section id="plan" class="content" style="display:none;">
+            <form id="planForm">
+                <div class="input-group">
+                    <label>身高(cm): <input type="number" id="height" required></label>
+                    <label>体重(kg): <input type="number" id="weight" required></label>
+                </div>
+                <button type="submit">生成计划</button>
+            </form>
+            <div id="planResult"></div>
+            <div id="planComment" style="margin-top:18px;color:#4CAF50;font-weight:bold;"></div>
+        </section>
+
+        <!-- 跑步记录模块 -->
+        <section id="records" class="content" style="display:none;">
+            <form id="recordForm">
+                <input type="date" id="runDate" required>
+                <input type="number" step="0.1" placeholder="跑步时长(小时)" required>
+                <textarea placeholder="跑步心得..."></textarea>
+                <button type="submit">添加记录</button>
+            </form>
+            <div id="recordsList"></div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
