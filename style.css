@@ -139,26 +139,6 @@ body::before {
     }
 }
 
-/* 添加文字打字机效果 */
-.cover h1::after {
-    content: '';
-    display: inline-block;
-    width: 3px;
-    height: 4rem;
-    background: #fff;
-    margin-left: 10px;
-    animation: blink 1s infinite;
-    vertical-align: text-bottom;
-}
-
-@keyframes blink {
-    0%, 50% {
-        opacity: 1;
-    }
-    51%, 100% {
-        opacity: 0;
-    }
-}
 
 
 /* Logo 动画效果 */
