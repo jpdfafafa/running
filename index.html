@@ -9,10 +9,21 @@
 <body>
     <!-- 主界面欢迎语 -->
     <header class="cover" id="cover">
+        <div class="floating-elements">
+            <div class="floating-circle" style="top: 10%; left: 10%; animation-delay: 0s;"></div>
+            <div class="floating-circle" style="top: 20%; right: 15%; animation-delay: 1s;"></div>
+            <div class="floating-circle" style="bottom: 30%; left: 20%; animation-delay: 2s;"></div>
+            <div class="floating-circle" style="bottom: 15%; right: 10%; animation-delay: 3s;"></div>
+        </div>
         <img src="logo.png" alt="跑步助手LOGO" class="logo">
         <h1>running science</h1>
         <h2>开启您的健康跑步之旅</h2>
         <button id="startBtn">开始</button>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+            <div class="scroll-arrow"></div>
+            <div class="scroll-arrow"></div>
+        </div>
     </header>
 
     <!-- 登录弹窗 -->
@@ -127,4 +138,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
