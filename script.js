@@ -56,11 +56,46 @@ document.addEventListener('DOMContentLoaded', function () {
     const startBtn = document.getElementById('startBtn');
     const loginModal = document.getElementById('loginModal');
     const loginForm = document.getElementById('loginForm');
+    const registerModal = document.getElementById('registerModal');
+    const registerForm = document.getElementById('registerForm');
     const subNav = document.getElementById('subNav');
     const navButtons = subNav.querySelectorAll('button[data-target]');
     const sections = document.querySelectorAll('main .content');
     const moreModal = document.getElementById('moreModal');
     const closeMore = document.getElementById('closeMore');
+    const registerBtn = document.getElementById('registerBtn');
+    const backToLoginBtn = document.getElementById('backToLoginBtn');
+    const loginMessage = document.getElementById('loginMessage');
+    const registerMessage = document.getElementById('registerMessage');
+
+    // 用户数据存储
+    let users = JSON.parse(localStorage.getItem('users')) || {};
+    let currentUser = null; // 当前登录用户
+
+    // 加载用户数据
+    function loadUserData() {
+        if (!currentUser) return;
+        
+        // 加载用户的跑步记录
+        const userRecordsKey = `userRecords_${currentUser}`;
+        records = JSON.parse(localStorage.getItem(userRecordsKey)) || [];
+        updateRecordsDisplay();
+        
+        // 加载用户的跑步计划
+        const userPlansKey = `userPlans_${currentUser}`;
+        const savedPlans = JSON.parse(localStorage.getItem(userPlansKey)) || [];
+        if (savedPlans.length > 0) {
+            const planResult = document.getElementById('planResult');
+            const planComment = document.getElementById('planComment');
+            if (planResult && planComment) {
+                const latestPlan = savedPlans[savedPlans.length - 1];
+                planResult.innerHTML = latestPlan.plan;
+                planComment.textContent = latestPlan.comment;
+            }
+        }
+        
+        console.log('已加载用户数据:', currentUser);
+    }
 
     // “开始”按钮点击后显示登录弹窗
     startBtn.addEventListener('click', function () {
@@ -104,9 +139,39 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 600);
     });
 
-    // 登录表单提交后显示功能选择
+    // 登录表单提交验证
     loginForm.addEventListener('submit', function (e) {
         e.preventDefault();
+        
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        // 清除之前的消息
+        loginMessage.textContent = '';
+        loginMessage.style.color = '#ff6b6b';
+        
+        // 验证用户
+        if (!users[username]) {
+            loginMessage.textContent = '请先注册账户';
+            shakeElement(loginForm);
+            return;
+        }
+        
+        if (users[username] !== password) {
+            loginMessage.textContent = '密码错误';
+            shakeElement(loginForm);
+            return;
+        }
+        
+        // 登录成功
+        loginMessage.textContent = '登录成功！';
+        loginMessage.style.color = '#4CAF50';
+        
+        // 设置当前用户
+        currentUser = username;
+        
+        // 加载用户数据
+        loadUserData();
         
         // 添加登录成功动画
         const loginBox = document.querySelector('.login-box');
@@ -137,6 +202,159 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 100);
         }, 600);
     });
+
+    // 注册按钮点击事件
+    registerBtn.addEventListener('click', function () {
+        // 添加按钮点击动画
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = '';
+        }, 200);
+        
+        // 切换到注册界面
+        loginModal.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        loginModal.style.opacity = '0';
+        loginModal.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+            loginModal.style.display = 'none';
+            registerModal.style.display = 'flex';
+            registerModal.style.opacity = '0';
+            registerModal.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                registerModal.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                registerModal.style.opacity = '1';
+                registerModal.style.transform = 'scale(1)';
+            }, 100);
+        }, 400);
+    });
+
+    // 返回登录按钮点击事件
+    backToLoginBtn.addEventListener('click', function () {
+        // 添加按钮点击动画
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = '';
+        }, 200);
+        
+        // 切换回登录界面
+        registerModal.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        registerModal.style.opacity = '0';
+        registerModal.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+            registerModal.style.display = 'none';
+            loginModal.style.display = 'flex';
+            loginModal.style.opacity = '0';
+            loginModal.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                loginModal.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                loginModal.style.opacity = '1';
+                loginModal.style.transform = 'scale(1)';
+            }, 100);
+        }, 400);
+    });
+
+    // 注册表单提交验证
+    registerForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        
+        const username = document.getElementById('regUsername').value;
+        const password = document.getElementById('regPassword').value;
+        const confirmPassword = document.getElementById('regConfirmPassword').value;
+        
+        // 清除之前的消息
+        registerMessage.textContent = '';
+        registerMessage.style.color = '#ff6b6b';
+        
+        // 验证输入
+        if (username.length < 3) {
+            registerMessage.textContent = '用户名至少需要3个字符';
+            shakeElement(registerForm);
+            return;
+        }
+        
+        if (password.length < 6) {
+            registerMessage.textContent = '密码至少需要6个字符';
+            shakeElement(registerForm);
+            return;
+        }
+        
+        if (password !== confirmPassword) {
+            registerMessage.textContent = '两次输入的密码不一致';
+            shakeElement(registerForm);
+            return;
+        }
+        
+        if (users[username]) {
+            registerMessage.textContent = '用户名已存在';
+            shakeElement(registerForm);
+            return;
+        }
+        
+        // 注册成功
+        users[username] = password;
+        localStorage.setItem('users', JSON.stringify(users));
+        
+        registerMessage.textContent = '注册成功！请登录';
+        registerMessage.style.color = '#4CAF50';
+        
+        // 创建成功粒子效果
+        const registerBox = document.querySelector('.register-box');
+        const rect = registerBox.getBoundingClientRect();
+        for (let i = 0; i < 20; i++) {
+            setTimeout(() => {
+                const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 150;
+                const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 150;
+                createParticle(x, y);
+            }, i * 30);
+        }
+        
+        // 2秒后自动返回登录界面
+        setTimeout(() => {
+            registerModal.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            registerModal.style.opacity = '0';
+            registerModal.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                registerModal.style.display = 'none';
+                loginModal.style.display = 'flex';
+                loginModal.style.opacity = '0';
+                loginModal.style.transform = 'scale(0.8)';
+                
+                setTimeout(() => {
+                    loginModal.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    loginModal.style.opacity = '1';
+                    loginModal.style.transform = 'scale(1)';
+                    
+                    // 清空注册表单
+                    registerForm.reset();
+                    registerMessage.textContent = '';
+                }, 100);
+            }, 400);
+        }, 2000);
+    });
+
+    // 震动效果函数
+    function shakeElement(element) {
+        element.style.animation = 'shake 0.5s';
+        setTimeout(() => {
+            element.style.animation = '';
+        }, 500);
+    }
+
+    // 添加震动动画样式
+    const shakeStyle = document.createElement('style');
+    shakeStyle.textContent = `
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+    `;
+    document.head.appendChild(shakeStyle);
 
     // 功能选择按钮切换子界面
     navButtons.forEach(btn => {
@@ -284,6 +502,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     planComment.style.opacity = '1';
                     planComment.style.transform = 'translateY(0)';
                     
+                    // 保存到当前用户的localStorage
+                    if (currentUser) {
+                        const userPlansKey = `userPlans_${currentUser}`;
+                        const savedPlans = JSON.parse(localStorage.getItem(userPlansKey)) || [];
+                        savedPlans.push({
+                            plan: plan,
+                            comment: comment,
+                            createdAt: new Date().toISOString()
+                        });
+                        localStorage.setItem(userPlansKey, JSON.stringify(savedPlans));
+                    }
+                    
                     // 创建成功粒子效果
                     const rect = submitBtn.getBoundingClientRect();
                     for (let i = 0; i < 15; i++) {
@@ -323,6 +553,13 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         
         records.push(newRecord);
+        
+        // 保存到当前用户的localStorage
+        if (currentUser) {
+            const userRecordsKey = `userRecords_${currentUser}`;
+            localStorage.setItem(userRecordsKey, JSON.stringify(records));
+        }
+        
         updateRecordsDisplay(newRecord);
         e.target.reset();
         

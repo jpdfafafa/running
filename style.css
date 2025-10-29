@@ -587,12 +587,91 @@ input, textarea {
     font-weight: bold;
     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
     transition: background 0.3s, transform 0.2s;
+    margin-bottom: 10px;
+    width: 100%;
 }
 
 .login-box button:hover {
     background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
     color: #333;
     transform: scale(1.05);
+}
+
+/* 注册弹窗样式 */
+.register-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('22222.jpg') center/cover;
+    background-blend-mode: overlay;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.register-box {
+    background: rgba(255,255,255,0.95);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 32px 28px;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.register-box h2 {
+    margin-bottom: 18px;
+    color: #2196F3;
+}
+
+.register-box input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.register-box button {
+    padding: 10px 32px;
+    border: none;
+    border-radius: 24px;
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    transition: background 0.3s, transform 0.2s;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.register-box button:hover {
+    background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
+    color: #333;
+    transform: scale(1.05);
+}
+
+/* 注册按钮特殊样式 */
+#registerBtn {
+    background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%) !important;
+}
+
+#registerBtn:hover {
+    background: linear-gradient(90deg, #38f9d7 0%, #43e97b 100%) !important;
+}
+
+/* 返回登录按钮特殊样式 */
+#backToLoginBtn {
+    background: linear-gradient(90deg, #ff6b6b 0%, #ff8e53 100%) !important;
+}
+
+#backToLoginBtn:hover {
+    background: linear-gradient(90deg, #ff8e53 0%, #ff6b6b 100%) !important;
 }
 
 /* 更多服务弹窗样式 */
@@ -898,6 +977,7 @@ input:focus, textarea:focus {
 
 /* 移除body滤镜对弹窗内容的影响 */
 .login-modal *,
+.register-modal *,
 .more-modal * {
     filter: none !important;
     -webkit-filter: none !important;
@@ -905,6 +985,7 @@ input:focus, textarea:focus {
 
 /* 确保弹窗内容不受背景动画影响 */
 .login-box,
+.register-box,
 .more-box {
     isolation: isolate;
 }
