@@ -1199,3 +1199,343 @@ input:focus, textarea:focus {
     transform: scale(1.1);
     filter: brightness(1.2);
 }
+
+/* 响应式设计 - 媒体查询 */
+/* 平板设备 */
+@media (max-width: 768px) {
+    .cover {
+        padding: 60px 15px;
+        min-height: 300px;
+    }
+    
+    .cover h1 {
+        font-size: 3rem;
+        letter-spacing: 4px;
+    }
+    
+    .cover h2 {
+        font-size: 1.4rem;
+    }
+    
+    .logo {
+        width: 100px;
+    }
+    
+    #startBtn {
+        padding: 14px 40px;
+        font-size: 1.3rem;
+    }
+    
+    .sub-nav {
+        margin: 15px;
+        padding: 15px 20px;
+    }
+    
+    .sub-nav button {
+        padding: 12px 24px;
+        font-size: 1rem;
+        margin: 5px;
+    }
+    
+    .content {
+        margin: 15px;
+        padding: 20px;
+    }
+    
+    .pros-cons {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+/* 手机设备 */
+@media (max-width: 480px) {
+    /* 基础设置 */
+    body {
+        font-size: 14px;
+    }
+    
+    /* 封面区域 */
+    .cover {
+        padding: 40px 10px;
+        min-height: 250px;
+        border-radius: 0 0 30% 30% / 0 0 15px 15px;
+    }
+    
+    .cover h1 {
+        font-size: 2.2rem;
+        letter-spacing: 2px;
+        margin: 15px 0;
+    }
+    
+    .cover h2 {
+        font-size: 1.1rem;
+        margin: 10px 0 20px 0;
+    }
+    
+    .logo {
+        width: 80px;
+        margin-bottom: 15px;
+        border-width: 2px;
+        padding: 5px;
+    }
+    
+    #startBtn {
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+    }
+    
+    /* 导航区域 */
+    .sub-nav {
+        margin: 10px;
+        padding: 15px;
+        position: relative;
+        top: 10px;
+    }
+    
+    .logo-container {
+        margin-bottom: 15px;
+        gap: 10px;
+    }
+    
+    .sub-nav .logo {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    
+    .brand-text {
+        font-size: 1.4rem;
+        letter-spacing: 1px;
+    }
+    
+    .sub-nav div {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+    
+    .sub-nav button {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        margin: 3px 0;
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    /* 内容区域 */
+    .content {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    .pros-cons {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .pros-cons h2 {
+        font-size: 1.2rem;
+    }
+    
+    .pros-cons ul li {
+        font-size: 0.9rem;
+        padding: 6px 0;
+        padding-left: 15px;
+    }
+    
+    /* 表单样式 */
+    .input-group {
+        gap: 10px;
+    }
+    
+    input, textarea {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    /* 弹窗样式 */
+    .login-box,
+    .register-box,
+    .more-box,
+    .logo-modal-content,
+    .confirm-modal-content {
+        margin: 10px;
+        padding: 20px;
+        min-width: auto;
+        width: calc(100vw - 40px);
+        max-width: 320px;
+    }
+    
+    .login-box h2,
+    .register-box h2 {
+        font-size: 1.3rem;
+    }
+    
+    .login-box input,
+    .register-box input {
+        padding: 8px;
+        margin-bottom: 12px;
+        font-size: 0.9rem;
+    }
+    
+    .login-box button,
+    .register-box button {
+        padding: 8px 24px;
+        font-size: 1rem;
+    }
+    
+    /* 更多服务弹窗 */
+    .more-box {
+        max-height: 80vh;
+    }
+    
+    .more-box img {
+        width: 150px !important;
+        height: auto;
+    }
+    
+    /* 记录和计划项 */
+    .record-item,
+    .plan-item {
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+    
+    .record-item h4,
+    .plan-item h4 {
+        font-size: 1.1rem;
+    }
+    
+    .record-item p,
+    .plan-item p {
+        font-size: 0.9rem;
+    }
+    
+    .delete-btn {
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+        top: 10px;
+        right: 10px;
+    }
+    
+    /* 浮动元素调整 */
+    .floating-circle {
+        width: 40px;
+        height: 40px;
+    }
+    
+    /* 滚动指示器 */
+    .scroll-indicator {
+        bottom: 20px;
+    }
+    
+    .scroll-arrow {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+/* 超小屏幕设备 */
+@media (max-width: 320px) {
+    .cover h1 {
+        font-size: 1.8rem;
+    }
+    
+    .cover h2 {
+        font-size: 1rem;
+    }
+    
+    .logo {
+        width: 60px;
+    }
+    
+    #startBtn {
+        padding: 10px 25px;
+        font-size: 1rem;
+    }
+    
+    .sub-nav button {
+        font-size: 0.85rem;
+        padding: 8px 16px;
+    }
+    
+    .brand-text {
+        font-size: 1.2rem;
+    }
+}
+
+/* 确保图片在移动设备上正确显示 */
+@media (max-width: 768px) {
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+    
+    /* 特定图片处理 */
+    .logo {
+        max-width: 120px;
+        height: auto;
+    }
+    
+    .more-box img {
+        max-width: 200px;
+        height: auto;
+    }
+    
+    /* 背景图片优化 */
+    body {
+        background-attachment: scroll;
+        background-size: cover;
+    }
+}
+
+/* 横屏模式优化 */
+@media (max-width: 768px) and (orientation: landscape) {
+    .cover {
+        padding: 30px 15px;
+        min-height: 200px;
+    }
+    
+    .cover h1 {
+        font-size: 2.5rem;
+    }
+    
+    .cover h2 {
+        font-size: 1.2rem;
+    }
+    
+    .logo {
+        width: 70px;
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+    button:hover {
+        transform: none;
+    }
+    
+    .logo:hover {
+        transform: none;
+    }
+    
+    .record-item:hover,
+    .plan-item:hover {
+        transform: none;
+    }
+    
+    /* 增加触摸目标大小 */
+    button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .delete-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
