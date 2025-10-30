@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const registerModal = document.getElementById('registerModal');
     const registerForm = document.getElementById('registerForm');
     const registerBtn = document.getElementById('registerBtn');
-    const backToLoginBtn = document.getElementById('backToLoginBtn');
+    const cancelRegisterBtn = document.getElementById('cancelRegisterBtn');
     const subNav = document.getElementById('subNav');
     const navButtons = subNav.querySelectorAll('button[data-target]');
     const sections = document.querySelectorAll('main .content');
@@ -68,93 +68,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const loginMessage = document.getElementById('loginMessage');
     const registerMessage = document.getElementById('registerMessage');
 
-    // 用户管理功能
-    class UserManager {
-        constructor() {
-            this.users = JSON.parse(localStorage.getItem('users')) || {};
-            this.currentUser = null;
-        }
-
-        // 注册用户
-        register(username, password) {
-            if (this.users[username]) {
-                return { success: false, message: '用户名已存在' };
-            }
-            
-            if (password.length < 6) {
-                return { success: false, message: '密码长度至少6位' };
-            }
-
-            this.users[username] = {
-                password: password,
-                createdAt: new Date().toISOString()
-            };
-            
-            localStorage.setItem('users', JSON.stringify(this.users));
-            return { success: true, message: '注册成功' };
-        }
-
-        // 验证登录
-        login(username, password) {
-            if (!this.users[username]) {
-                return { success: false, message: '请先注册账户' };
-            }
-
-            if (this.users[username].password !== password) {
-                return { success: false, message: '密码错误' };
-            }
-
-            this.currentUser = username;
-            localStorage.setItem('currentUser', username);
-            return { success: true, message: '登录成功' };
-        }
-
-        // 登出
-        logout() {
-            this.currentUser = null;
-            localStorage.removeItem('currentUser');
-        }
-
-        // 获取当前用户
-        getCurrentUser() {
-            if (!this.currentUser) {
-                this.currentUser = localStorage.getItem('currentUser');
-            }
-            return this.currentUser;
-        }
-
-        // 获取用户跑步记录
-        getUserRunningRecords() {
-            const username = this.getCurrentUser();
-            if (!username) return [];
-            return JSON.parse(localStorage.getItem(`runningRecords_${username}`) || '[]');
-        }
-
-        // 保存用户跑步记录
-        saveUserRunningRecords(records) {
-            const username = this.getCurrentUser();
-            if (!username) return false;
-            localStorage.setItem(`runningRecords_${username}`, JSON.stringify(records));
-            return true;
-        }
-
-        // 获取用户跑步计划
-        getUserRunningPlans() {
-            const username = this.getCurrentUser();
-            if (!username) return [];
-            return JSON.parse(localStorage.getItem(`runningPlans_${username}`) || '[]');
-        }
-
-        // 保存用户跑步计划
-        saveUserRunningPlans(plans) {
-            const username = this.getCurrentUser();
-            if (!username) return false;
-            localStorage.setItem(`runningPlans_${username}`, JSON.stringify(plans));
-            return true;
-        }
-    }
-
-    const userManager = new UserManager();
+    // 用户数据存储（使用localStorage持久化）
+    let users = JSON.parse(localStorage.getItem('users')) || {};
+    let currentUser = null; // 当前登录用户
 
     // “开始”按钮点击后显示登录弹窗
     startBtn.addEventListener('click', function () {
@@ -202,51 +118,287 @@ document.addEventListener('DOMContentLoaded', function () {
     loginForm.addEventListener('submit', function (e) {
         e.preventDefault();
         
-        const username = document.getElementById('username').value;
+        const username = document.getElementById('username').value.trim();
         const password = document.getElementById('password').value;
         
-        // 验证登录
-        const result = userManager.login(username, password);
+        // 清除之前的消息
+        loginMessage.textContent = '';
+        loginMessage.style.color = '#ff6b6b';
         
-        // 显示消息
-        loginMessage.textContent = result.message;
-        loginMessage.className = 'message ' + (result.success ? 'success' : 'error');
-        
-        if (result.success) {
-            // 登录成功，显示功能选择界面
-            const loginBox = document.querySelector('.login-box');
-            loginBox.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            loginBox.style.transform = 'scale(0.8) rotateY(90deg)';
-            loginBox.style.opacity = '0';
+        // 验证用户名是否存在
+        if (!users[username]) {
+            loginMessage.textContent = '请先注册账户';
+            loginMessage.style.color = '#ff6b6b';
             
-            // 创建成功粒子效果
-            const rect = loginBox.getBoundingClientRect();
-            for (let i = 0; i < 30; i++) {
-                setTimeout(() => {
-                    const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 200;
-                    const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 200;
-                    createParticle(x, y);
-                }, i * 20);
-            }
+            // 添加错误动画
+            const loginBox = document.querySelector('.login-box');
+            loginBox.style.animation = 'shake 0.5s';
+            setTimeout(() => {
+                loginBox.style.animation = '';
+            }, 500);
+            return;
+        }
+        
+        // 验证密码是否正确
+        if (users[username] !== password) {
+            loginMessage.textContent = '密码错误';
+            loginMessage.style.color = '#ff6b6b';
+            
+            // 添加错误动画
+            const loginBox = document.querySelector('.login-box');
+            loginBox.style.animation = 'shake 0.5s';
+            setTimeout(() => {
+                loginBox.style.animation = '';
+            }, 500);
+            return;
+        }
+        
+        // 登录成功
+        loginMessage.textContent = '登录成功！';
+        loginMessage.style.color = '#4CAF50';
+        
+        // 设置当前用户
+        currentUser = username;
+        
+        // 加载用户数据
+        loadUserData();
+        
+        // 添加登录成功动画
+        const loginBox = document.querySelector('.login-box');
+        loginBox.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        loginBox.style.transform = 'scale(0.8) rotateY(90deg)';
+        loginBox.style.opacity = '0';
+        
+        // 创建成功粒子效果
+        const rect = loginBox.getBoundingClientRect();
+        for (let i = 0; i < 30; i++) {
+            setTimeout(() => {
+                const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 200;
+                const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 200;
+                createParticle(x, y);
+            }, i * 20);
+        }
+        
+        setTimeout(() => {
+            loginModal.style.display = 'none';
+            subNav.style.display = 'flex';
+            subNav.style.opacity = '0';
+            subNav.style.transform = 'translateY(30px) scale(0.9)';
             
             setTimeout(() => {
-                loginModal.style.display = 'none';
-                subNav.style.display = 'flex';
-                subNav.style.opacity = '0';
-                subNav.style.transform = 'translateY(30px) scale(0.9)';
+                subNav.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                subNav.style.opacity = '1';
+                subNav.style.transform = 'translateY(0) scale(1)';
+            }, 100);
+        }, 600);
+    });
+
+    // 注册按钮点击事件
+    registerBtn.addEventListener('click', function () {
+        // 添加按钮点击动画
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = '';
+        }, 200);
+        
+        // 切换到注册界面
+        loginModal.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        loginModal.style.opacity = '0';
+        loginModal.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+            loginModal.style.display = 'none';
+            registerModal.style.display = 'flex';
+            registerModal.style.opacity = '0';
+            registerModal.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                registerModal.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                registerModal.style.opacity = '1';
+                registerModal.style.transform = 'scale(1)';
+            }, 100);
+        }, 400);
+    });
+
+    // 取消注册按钮点击事件
+    cancelRegisterBtn.addEventListener('click', function () {
+        // 添加按钮点击动画
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = '';
+        }, 200);
+        
+        // 切换回登录界面
+        registerModal.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        registerModal.style.opacity = '0';
+        registerModal.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+            registerModal.style.display = 'none';
+            loginModal.style.display = 'flex';
+            loginModal.style.opacity = '0';
+            loginModal.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                loginModal.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                loginModal.style.opacity = '1';
+                loginModal.style.transform = 'scale(1)';
+            }, 100);
+        }, 400);
+        
+        // 清空注册表单和消息
+        registerForm.reset();
+        registerMessage.textContent = '';
+    });
+
+    // 注册表单提交验证
+    registerForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        
+        const username = document.getElementById('regUsername').value.trim();
+        const password = document.getElementById('regPassword').value;
+        const confirmPassword = document.getElementById('regConfirmPassword').value;
+        
+        // 清除之前的消息
+        registerMessage.textContent = '';
+        registerMessage.style.color = '#ff6b6b';
+        
+        // 验证用户名是否为空
+        if (!username) {
+            registerMessage.textContent = '请输入用户名';
+            shakeRegisterBox();
+            return;
+        }
+        
+        // 验证用户名是否已存在
+        if (users[username]) {
+            registerMessage.textContent = '用户名已存在';
+            shakeRegisterBox();
+            return;
+        }
+        
+        // 验证密码是否为空
+        if (!password) {
+            registerMessage.textContent = '请输入密码';
+            shakeRegisterBox();
+            return;
+        }
+        
+        // 验证密码长度
+        if (password.length < 6) {
+            registerMessage.textContent = '密码长度至少6位';
+            shakeRegisterBox();
+            return;
+        }
+        
+        // 验证确认密码
+        if (password !== confirmPassword) {
+            registerMessage.textContent = '两次输入的密码不一致';
+            shakeRegisterBox();
+            return;
+        }
+        
+        // 注册成功
+        users[username] = password;
+        localStorage.setItem('users', JSON.stringify(users));
+        
+        registerMessage.textContent = '注册成功！请登录';
+        registerMessage.style.color = '#4CAF50';
+        
+        // 创建成功粒子效果
+        const registerBox = document.querySelector('.register-box');
+        const rect = registerBox.getBoundingClientRect();
+        for (let i = 0; i < 20; i++) {
+            setTimeout(() => {
+                const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 150;
+                const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 150;
+                createParticle(x, y);
+            }, i * 30);
+        }
+        
+        // 2秒后自动切换到登录界面
+        setTimeout(() => {
+            registerModal.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            registerModal.style.opacity = '0';
+            registerModal.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                registerModal.style.display = 'none';
+                loginModal.style.display = 'flex';
+                loginModal.style.opacity = '0';
+                loginModal.style.transform = 'scale(0.8)';
                 
                 setTimeout(() => {
-                    subNav.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                    subNav.style.opacity = '1';
-                    subNav.style.transform = 'translateY(0) scale(1)';
-                    
-                    // 加载用户数据
-                    loadRunningRecords();
-                    loadRunningPlans();
+                    loginModal.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    loginModal.style.opacity = '1';
+                    loginModal.style.transform = 'scale(1)';
                 }, 100);
-            }, 600);
-        }
+            }, 400);
+            
+            // 清空注册表单和消息
+            registerForm.reset();
+            registerMessage.textContent = '';
+            
+            // 预填用户名到登录表单
+            document.getElementById('username').value = username;
+            loginMessage.textContent = '注册成功，请登录';
+            loginMessage.style.color = '#4CAF50';
+        }, 2000);
     });
+
+    // 注册框抖动动画函数
+    function shakeRegisterBox() {
+        const registerBox = document.querySelector('.register-box');
+        registerBox.style.animation = 'shake 0.5s';
+        setTimeout(() => {
+            registerBox.style.animation = '';
+        }, 500);
+    }
+
+    // 添加抖动动画样式
+    const shakeStyle = document.createElement('style');
+    shakeStyle.textContent = `
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+    `;
+    document.head.appendChild(shakeStyle);
+
+    // 用户数据管理函数
+    function loadUserData() {
+        if (!currentUser) return;
+        
+        // 加载用户数据
+        const userData = JSON.parse(localStorage.getItem(`userData_${currentUser}`)) || {
+            records: [],
+            plans: []
+        };
+        
+        // 更新全局变量
+        records = userData.records;
+        plans = userData.plans;
+        
+        // 更新显示
+        updateRecordsDisplay();
+        updatePlansDisplay();
+    }
+
+    function saveUserData() {
+        if (!currentUser) return;
+        
+        const userData = {
+            records: records,
+            plans: plans
+        };
+        
+        localStorage.setItem(`userData_${currentUser}`, JSON.stringify(userData));
+    }
+
+    // 初始化用户数据
+    let records = [];
+    let plans = [];
 
     // 功能选择按钮切换子界面
     navButtons.forEach(btn => {
@@ -313,13 +465,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         targetSection.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
                         targetSection.style.opacity = '1';
                         targetSection.style.transform = 'translateY(0) scale(1)';
-                        
-                        // 根据不同模块加载相应数据
-                        if (targetId === 'records') {
-                            loadRunningRecords();
-                        } else if (targetId === 'plan') {
-                            loadRunningPlans();
-                        }
                     }, 100);
                 }, 350);
                 
@@ -341,47 +486,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const planForm = document.getElementById('planForm');
     const planResult = document.getElementById('planResult');
     const planComment = document.getElementById('planComment');
-
-    // 跑步计划相关函数
-    function loadRunningPlans() {
-        const plans = userManager.getUserRunningPlans();
-        const plansList = document.getElementById('plansList');
-        
-        if (plans.length === 0) {
-            plansList.innerHTML = '<p class="no-plans">暂无跑步计划</p>';
-            return;
-        }
-        
-        const html = plans.map((plan, index) => `
-            <div class="plan-item" style="animation-delay: ${index * 0.1}s">
-                <h4>${plan.title}</h4>
-                <p>${plan.content}</p>
-                <p><strong>评价:</strong> ${plan.comment}</p>
-                <p><small>创建时间: ${new Date(plan.createdAt).toLocaleString()}</small></p>
-                <button class="delete-btn" onclick="deletePlan(${index})">删除</button>
-            </div>
-        `).join('');
-        
-        plansList.innerHTML = html;
-    }
-
-    function deletePlan(index) {
-        const plans = userManager.getUserRunningPlans();
-        plans.splice(index, 1);
-        userManager.saveUserRunningPlans(plans);
-        loadRunningPlans();
-        
-        // 创建删除粒子效果
-        const plansList = document.getElementById('plansList');
-        const rect = plansList.getBoundingClientRect();
-        for (let i = 0; i < 8; i++) {
-            setTimeout(() => {
-                const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 60;
-                const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 60;
-                createParticle(x, y);
-            }, i * 25);
-        }
-    }
 
     if (planForm) {
         planForm.addEventListener('submit', function (e) {
@@ -412,6 +516,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <li>跑步前后做好热身和拉伸。</li>
                     </ul>
                 `;
+                
                 // 评价逻辑
                 const bmi = weight / Math.pow(height / 100, 2);
                 let comment = '';
@@ -426,19 +531,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 
                 // 保存计划到用户数据
-                const newPlan = {
-                    title: '您的专属跑步计划',
-                    content: plan.replace(/<[^>]*>/g, '').replace(/\n\s+/g, '\n').trim(),
-                    comment: comment,
+                const planData = {
                     height: height,
                     weight: weight,
-                    bmi: bmi.toFixed(1),
+                    plan: plan,
+                    comment: comment,
                     createdAt: new Date().toISOString()
                 };
-                
-                const plans = userManager.getUserRunningPlans();
-                plans.push(newPlan);
-                userManager.saveUserRunningPlans(plans);
+                plans.push(planData);
+                saveUserData();
+                updatePlansDisplay(planData); // 立即更新计划显示并传递新计划
                 
                 // 添加结果动画
                 planResult.style.opacity = '0';
@@ -474,46 +576,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // 跑步记录相关函数
-    function loadRunningRecords() {
-        const records = userManager.getUserRunningRecords();
-        const recordsList = document.getElementById('recordsList');
-        
-        if (records.length === 0) {
-            recordsList.innerHTML = '<p class="no-records">暂无跑步记录</p>';
-            return;
-        }
-        
-        const html = records.map((record, index) => `
-            <div class="record-item" style="animation-delay: ${index * 0.1}s">
-                <h4>${record.date}</h4>
-                <p>时长: ${record.duration}小时</p>
-                <p>${record.notes}</p>
-                <button class="delete-btn" onclick="deleteRecord(${index})">删除</button>
-            </div>
-        `).join('');
-        
-        recordsList.innerHTML = html;
-    }
-
-    function deleteRecord(index) {
-        const records = userManager.getUserRunningRecords();
-        records.splice(index, 1);
-        userManager.saveUserRunningRecords(records);
-        loadRunningRecords();
-        
-        // 创建删除粒子效果
-        const recordsList = document.getElementById('recordsList');
-        const rect = recordsList.getBoundingClientRect();
-        for (let i = 0; i < 8; i++) {
-            setTimeout(() => {
-                const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 60;
-                const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 60;
-                createParticle(x, y);
-            }, i * 25);
-        }
-    }
-
     // 记录存储功能
     document.getElementById('recordForm').addEventListener('submit', e => {
         e.preventDefault();
@@ -531,17 +593,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const newRecord = {
             date: e.target.elements[0].value,
             duration: e.target.elements[1].value,
-            notes: e.target.elements[2].value,
-            createdAt: new Date().toISOString()
+            notes: e.target.elements[2].value
         };
         
-        // 获取当前用户的记录并添加新记录
-        const records = userManager.getUserRunningRecords();
         records.push(newRecord);
-        userManager.saveUserRunningRecords(records);
-        
-        // 更新显示
-        loadRunningRecords();
+        saveUserData(); // 保存用户数据
+        updateRecordsDisplay(newRecord);
         e.target.reset();
         
         // 创建成功粒子效果
@@ -555,120 +612,163 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // 注册按钮点击事件
-    registerBtn.addEventListener('click', function () {
-        // 添加按钮点击动画
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            this.style.transform = '';
-        }, 200);
+    function updateRecordsDisplay(newRecord = null) {
+        const recordsList = document.getElementById('recordsList');
+        const html = records.map((record, index) => `
+            <div class="record-item" style="animation-delay: ${index * 0.1}s">
+                <div class="record-content">
+                    <h4>${record.date}</h4>
+                    <p>时长: ${record.duration}小时</p>
+                    <p>${record.notes}</p>
+                </div>
+                <button class="delete-btn" onclick="deleteRecord(${index})" title="删除记录">
+                    <span>×</span>
+                </button>
+            </div>
+        `).join('');
         
-        // 切换到注册界面
-        loginModal.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-        loginModal.style.opacity = '0';
-        loginModal.style.transform = 'scale(0.8)';
-        
-        setTimeout(() => {
-            loginModal.style.display = 'none';
-            registerModal.style.display = 'flex';
-            registerModal.style.opacity = '0';
-            registerModal.style.transform = 'scale(0.8)';
+        if (newRecord) {
+            // 如果是新记录，添加动画效果
+            recordsList.style.opacity = '0';
+            recordsList.style.transform = 'translateY(20px)';
             
             setTimeout(() => {
-                registerModal.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                registerModal.style.opacity = '1';
-                registerModal.style.transform = 'scale(1)';
-            }, 100);
-        }, 400);
-    });
-
-    // 返回登录按钮点击事件
-    backToLoginBtn.addEventListener('click', function () {
-        // 添加按钮点击动画
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            this.style.transform = '';
-        }, 200);
-        
-        // 切换回登录界面
-        registerModal.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-        registerModal.style.opacity = '0';
-        registerModal.style.transform = 'scale(0.8)';
-        
-        setTimeout(() => {
-            registerModal.style.display = 'none';
-            loginModal.style.display = 'flex';
-            loginModal.style.opacity = '0';
-            loginModal.style.transform = 'scale(0.8)';
-            
-            setTimeout(() => {
-                loginModal.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                loginModal.style.opacity = '1';
-                loginModal.style.transform = 'scale(1)';
-            }, 100);
-        }, 400);
-    });
-
-    // 注册表单提交事件
-    registerForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        
-        const username = document.getElementById('regUsername').value;
-        const password = document.getElementById('regPassword').value;
-        const confirmPassword = document.getElementById('regConfirmPassword').value;
-        
-        // 验证密码确认
-        if (password !== confirmPassword) {
-            registerMessage.textContent = '两次输入的密码不一致';
-            registerMessage.className = 'message error';
-            return;
-        }
-        
-        // 注册用户
-        const result = userManager.register(username, password);
-        
-        // 显示消息
-        registerMessage.textContent = result.message;
-        registerMessage.className = 'message ' + (result.success ? 'success' : 'error');
-        
-        if (result.success) {
-            // 注册成功，清空表单并延迟返回登录
-            registerForm.reset();
-            
-            // 创建成功粒子效果
-            const registerBox = document.querySelector('.register-box');
-            const rect = registerBox.getBoundingClientRect();
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => {
-                    const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 150;
-                    const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 150;
-                    createParticle(x, y);
-                }, i * 30);
-            }
-            
-            // 延迟返回登录界面
-            setTimeout(() => {
-                registerModal.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                registerModal.style.opacity = '0';
-                registerModal.style.transform = 'scale(0.8)';
+                recordsList.innerHTML = html;
+                recordsList.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                recordsList.style.opacity = '1';
+                recordsList.style.transform = 'translateY(0)';
                 
-                setTimeout(() => {
-                    registerModal.style.display = 'none';
-                    loginModal.style.display = 'flex';
-                    loginModal.style.opacity = '0';
-                    loginModal.style.transform = 'scale(0.8)';
+                // 为新记录添加特殊动画
+                const newRecordElement = recordsList.lastElementChild;
+                if (newRecordElement) {
+                    newRecordElement.style.background = 'linear-gradient(135deg, rgba(76,175,80,0.1), rgba(76,175,80,0.05))';
+                    newRecordElement.style.borderLeftColor = '#4CAF50';
+                    newRecordElement.style.transform = 'translateX(-20px)';
                     
                     setTimeout(() => {
-                        loginModal.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                        loginModal.style.opacity = '1';
-                        loginModal.style.transform = 'scale(1)';
-                        
-                        // 清空注册消息
-                        registerMessage.textContent = '';
-                        registerMessage.className = 'message';
+                        newRecordElement.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                        newRecordElement.style.transform = 'translateX(0)';
                     }, 100);
-                }, 400);
-            }, 1500);
+                }
+            }, 300);
+        } else {
+            recordsList.innerHTML = html;
         }
-    });
+    }
+
+    function updatePlansDisplay(newPlan = null) {
+        const plansList = document.getElementById('plansList');
+        if (!plansList) return;
+        
+        const html = plans.map((plan, index) => `
+            <div class="plan-item" style="animation-delay: ${index * 0.1}s">
+                <div class="plan-content-wrapper">
+                    <h4>计划 ${index + 1}</h4>
+                    <p>身高: ${plan.height}cm, 体重: ${plan.weight}kg</p>
+                    <div class="plan-content">${plan.plan}</div>
+                    <p class="plan-comment">${plan.comment}</p>
+                    <small>创建时间: ${new Date(plan.createdAt).toLocaleString()}</small>
+                </div>
+                <button class="delete-btn" onclick="deletePlan(${index})" title="删除计划">
+                    <span>×</span>
+                </button>
+            </div>
+        `).join('');
+        
+        if (newPlan) {
+            // 如果是新计划，添加动画效果
+            plansList.style.opacity = '0';
+            plansList.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                plansList.innerHTML = html;
+                plansList.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                plansList.style.opacity = '1';
+                plansList.style.transform = 'translateY(0)';
+                
+                // 为新计划添加特殊动画
+                const newPlanElement = plansList.lastElementChild;
+                if (newPlanElement) {
+                    newPlanElement.style.background = 'linear-gradient(135deg, rgba(33,150,243,0.1), rgba(33,150,243,0.05))';
+                    newPlanElement.style.borderLeftColor = '#2196F3';
+                    newPlanElement.style.transform = 'translateX(-20px)';
+                    
+                    setTimeout(() => {
+                        newPlanElement.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                        newPlanElement.style.transform = 'translateX(0)';
+                    }, 100);
+                }
+            }, 300);
+        } else {
+            plansList.innerHTML = html;
+        }
+    }
+
+    // 删除记录函数
+    window.deleteRecord = function(index) {
+        if (confirm('确定要删除这条跑步记录吗？')) {
+            // 添加删除动画
+            const recordItems = document.querySelectorAll('.record-item');
+            const targetItem = recordItems[index];
+            
+            if (targetItem) {
+                targetItem.style.transition = 'all 0.3s ease-out';
+                targetItem.style.transform = 'translateX(100%)';
+                targetItem.style.opacity = '0';
+                
+                setTimeout(() => {
+                    // 从数组中删除记录
+                    records.splice(index, 1);
+                    // 保存数据
+                    saveUserData();
+                    // 更新显示
+                    updateRecordsDisplay();
+                    
+                    // 创建删除成功粒子效果
+                    const rect = targetItem.getBoundingClientRect();
+                    for (let i = 0; i < 8; i++) {
+                        setTimeout(() => {
+                            const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 60;
+                            const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 60;
+                            createParticle(x, y);
+                        }, i * 25);
+                    }
+                }, 300);
+            }
+        }
+    };
+
+    // 删除计划函数
+    window.deletePlan = function(index) {
+        if (confirm('确定要删除这个训练计划吗？')) {
+            // 添加删除动画
+            const planItems = document.querySelectorAll('.plan-item');
+            const targetItem = planItems[index];
+            
+            if (targetItem) {
+                targetItem.style.transition = 'all 0.3s ease-out';
+                targetItem.style.transform = 'translateX(100%)';
+                targetItem.style.opacity = '0';
+                
+                setTimeout(() => {
+                    // 从数组中删除计划
+                    plans.splice(index, 1);
+                    // 保存数据
+                    saveUserData();
+                    // 更新显示
+                    updatePlansDisplay();
+                    
+                    // 创建删除成功粒子效果
+                    const rect = targetItem.getBoundingClientRect();
+                    for (let i = 0; i < 8; i++) {
+                        setTimeout(() => {
+                            const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 60;
+                            const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 60;
+                            createParticle(x, y);
+                        }, i * 25);
+                    }
+                }, 300);
+            }
+        }
+    };
 });
