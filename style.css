@@ -223,36 +223,6 @@ body::before {
     }
 }
 
-.nav-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    margin: 24px 0;
-}
-
-.nav-buttons button {
-    padding: 10px 28px;
-    font-size: 1.1rem;
-    border: none;
-    border-radius: 24px;
-    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-    color: #fff;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-    transition: background 0.3s, transform 0.2s;
-}
-
-.nav-buttons button:hover {
-    background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
-    transform: translateY(-2px) scale(1.05);
-}
-
-.nav-buttons button.active {
-    background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
-    color: #333;
-    font-weight: bold;
-    box-shadow: 0 4px 16px rgba(250,112,154,0.15);
-}
 
 button {
     padding: 12px 32px;
@@ -414,26 +384,6 @@ button:active::after {
     box-shadow: none;
 }
 
-.content {
-    display: none;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    position: relative;
-    transform: translateZ(0);
-    transition: transform 0.3s ease-out;
-}
-
-.content:hover {
-    transform: translateZ(50px) scale(1.02);
-}
-
-.content.active {
-    display: block;
-}
 
 .pros-cons {
     display: grid;
@@ -453,13 +403,6 @@ button:active::after {
     margin-bottom: 20px;
 }
 
-input, textarea {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 100%;
-    box-sizing: border-box;
-}
 
 /* 表单按钮美化 */
 #planForm button,
@@ -486,9 +429,42 @@ input, textarea {
 
 /* logo图标微调 */
 .sub-nav .logo {
-    width: 36px !important;
-    height: 36px !important;
-    margin-bottom: 12px;
+    width: 50px !important;
+    height: 50px !important;
+    margin: 0 !important;
+    display: block !important;
+}
+
+/* logo容器样式 */
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* 品牌文字样式 */
+.brand-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, #4CAF50, #2196F3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: brandGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes brandGlow {
+    0% {
+        filter: drop-shadow(0 0 5px rgba(76,175,80,0.3));
+    }
+    100% {
+        filter: drop-shadow(0 0 15px rgba(33,150,243,0.5));
+    }
 }
 
 /* 选项界面卡片美化 */
@@ -496,13 +472,16 @@ input, textarea {
     background: rgba(255,255,255,0.95);
     border-radius: 18px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-    padding: 32px 24px 24px 24px;
-    max-width: 340px;
-    margin: 40px auto 0 auto;
+    padding: 20px 30px;
+    max-width: 1200px;
+    margin: 20px auto 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     animation: fadeIn 0.6s;
+    position: sticky;
+    top: 20px;
+    z-index: 100;
 }
 
 @keyframes fadeIn {
@@ -516,11 +495,12 @@ input, textarea {
 }
 
 .sub-nav div {
-    width: 100%;
     display: flex;
-    flex-direction: column;
-    gap: 14px;
-    align-items: stretch;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
 }
 
 .sub-nav button {
@@ -759,7 +739,7 @@ main {
 /* 增强内容模块动画 */
 .content {
     display: none;
-    max-width: 800px;
+    max-width: 1200px;
     margin: 20px auto;
     padding: 30px;
     background: rgba(255,255,255,0.95);
@@ -887,21 +867,13 @@ input:focus, textarea:focus {
     line-height: 1.6;
 }
 
-/* 确保二维码不受滤镜影响 */
-.qr-code img,
+/* 确保图片不受滤镜影响 */
 .more-box img,
-.login-box img,
-.modal img {
+.login-box img {
     filter: none !important;
     -webkit-filter: none !important;
 }
 
-/* 移除body滤镜对弹窗内容的影响 */
-.login-modal *,
-.more-modal * {
-    filter: none !important;
-    -webkit-filter: none !important;
-}
 
 /* 注册弹窗样式 */
 .register-modal {
@@ -1104,10 +1076,126 @@ input:focus, textarea:focus {
     margin-top: 10px;
 }
 
-/* 移除body滤镜对弹窗内容的影响 */
-.login-modal *,
-.register-modal *,
-.more-modal * {
-    filter: none !important;
-    -webkit-filter: none !important;
+/* Logo点击弹窗样式 */
+.logo-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.logo-modal-content {
+    background: rgba(255,255,255,0.95);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 32px 28px;
+    min-width: 280px;
+    text-align: center;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+.logo-modal-content h3 {
+    margin-bottom: 24px;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.logo-modal-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+.modal-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+}
+
+.modal-btn:not(.logout-btn) {
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    color: #fff;
+}
+
+.modal-btn:not(.logout-btn):hover {
+    background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+    transform: translateY(-2px);
+}
+
+.modal-btn.logout-btn {
+    background: linear-gradient(90deg, #ff6b6b 0%, #ff8e53 100%);
+    color: #fff;
+}
+
+.modal-btn.logout-btn:hover {
+    background: linear-gradient(90deg, #ff8e53 0%, #ff6b6b 100%);
+    transform: translateY(-2px);
+}
+
+/* 注销确认弹窗样式 */
+.confirm-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+}
+
+.confirm-modal-content {
+    background: rgba(255,255,255,0.95);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 32px 28px;
+    min-width: 300px;
+    text-align: center;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+.confirm-modal-content h3 {
+    margin-bottom: 16px;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.confirm-modal-content p {
+    margin-bottom: 24px;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.confirm-modal-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Logo点击提示 */
+.sub-nav .logo-container .logo {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sub-nav .logo-container .logo:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
 }

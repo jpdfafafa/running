@@ -57,7 +57,10 @@
 
     <!-- 选择子界面 -->
     <nav class="sub-nav" id="subNav" style="display:none; flex-direction: column; align-items: center;">
-        <img src="logo.png" alt="跑步助手LOGO" class="logo" style="width:36px;height:36px;margin-bottom:12px;">
+        <div class="logo-container">
+            <img src="logo.png" alt="跑步助手LOGO" class="logo">
+            <span class="brand-text">running science</span>
+        </div>
         <!-- <h2>请选择功能</h2> -->
         <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
             <button data-target="advantages">跑步科普</button>
@@ -88,6 +91,29 @@
                     <li>学校周围 - 距离3.0km，风景好，适合长距离慢跑</li>
                 </ul>
             </section>
+        </div>
+    </div>
+
+    <!-- Logo点击弹窗 -->
+    <div class="logo-modal" id="logoModal" style="display:none;">
+        <div class="logo-modal-content">
+            <h3>用户选项</h3>
+            <div class="logo-modal-buttons">
+                <button id="backBtn" class="modal-btn">返回</button>
+                <button id="logoutBtn" class="modal-btn logout-btn">注销</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 注销确认弹窗 -->
+    <div class="confirm-modal" id="confirmModal" style="display:none;">
+        <div class="confirm-modal-content">
+            <h3>确认注销</h3>
+            <p>确定要注销账户吗？</p>
+            <div class="confirm-modal-buttons">
+                <button id="cancelLogoutBtn" class="modal-btn">取消</button>
+                <button id="confirmLogoutBtn" class="modal-btn logout-btn">确定</button>
+            </div>
         </div>
     </div>
 

@@ -771,4 +771,192 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     };
+
+    // Logo点击功能
+    const logoModal = document.getElementById('logoModal');
+    const confirmModal = document.getElementById('confirmModal');
+    const backBtn = document.getElementById('backBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
+    const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
+
+    // 为sub-nav中的logo添加点击事件（排除更多服务界面）
+    const subNavLogo = document.querySelector('.sub-nav .logo-container .logo');
+    if (subNavLogo) {
+        subNavLogo.addEventListener('click', function() {
+            // 检查当前是否在更多服务界面
+            const moreModalVisible = moreModal.style.display === 'flex';
+            if (!moreModalVisible) {
+                // 显示logo点击弹窗
+                logoModal.style.display = 'flex';
+                logoModal.style.opacity = '0';
+                logoModal.style.transform = 'scale(0.8)';
+                
+                setTimeout(() => {
+                    logoModal.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    logoModal.style.opacity = '1';
+                    logoModal.style.transform = 'scale(1)';
+                }, 100);
+                
+                // 创建点击粒子效果
+                const rect = this.getBoundingClientRect();
+                for (let i = 0; i < 12; i++) {
+                    setTimeout(() => {
+                        const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 80;
+                        const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 80;
+                        createParticle(x, y);
+                    }, i * 30);
+                }
+            }
+        });
+    }
+
+    // 返回按钮点击事件
+    backBtn.addEventListener('click', function() {
+        // 添加按钮点击动画
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = '';
+        }, 200);
+        
+        // 关闭logo弹窗
+        logoModal.style.transition = 'all 0.3s ease-out';
+        logoModal.style.opacity = '0';
+        logoModal.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+            logoModal.style.display = 'none';
+        }, 300);
+    });
+
+    // 注销按钮点击事件
+    logoutBtn.addEventListener('click', function() {
+        // 添加按钮点击动画
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = '';
+        }, 200);
+        
+        // 关闭logo弹窗
+        logoModal.style.transition = 'all 0.3s ease-out';
+        logoModal.style.opacity = '0';
+        logoModal.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+            logoModal.style.display = 'none';
+            // 显示注销确认弹窗
+            confirmModal.style.display = 'flex';
+            confirmModal.style.opacity = '0';
+            confirmModal.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                confirmModal.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                confirmModal.style.opacity = '1';
+                confirmModal.style.transform = 'scale(1)';
+            }, 100);
+        }, 300);
+    });
+
+    // 取消注销按钮点击事件
+    cancelLogoutBtn.addEventListener('click', function() {
+        // 添加按钮点击动画
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = '';
+        }, 200);
+        
+        // 关闭确认弹窗
+        confirmModal.style.transition = 'all 0.3s ease-out';
+        confirmModal.style.opacity = '0';
+        confirmModal.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+            confirmModal.style.display = 'none';
+        }, 300);
+    });
+
+    // 确认注销按钮点击事件
+    confirmLogoutBtn.addEventListener('click', function() {
+        // 添加按钮点击动画
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = '';
+        }, 200);
+        
+        // 创建注销成功粒子效果
+        const rect = this.getBoundingClientRect();
+        for (let i = 0; i < 20; i++) {
+            setTimeout(() => {
+                const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 100;
+                const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 100;
+                createParticle(x, y);
+            }, i * 25);
+        }
+        
+        // 关闭确认弹窗
+        confirmModal.style.transition = 'all 0.3s ease-out';
+        confirmModal.style.opacity = '0';
+        confirmModal.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+            confirmModal.style.display = 'none';
+            
+            // 清除当前用户状态
+            currentUser = null;
+            records = [];
+            plans = [];
+            
+            // 隐藏所有内容模块
+            sections.forEach(sec => sec.style.display = 'none');
+            moreModal.style.display = 'none';
+            
+            // 取消按钮高亮
+            navButtons.forEach(b => b.classList.remove('active'));
+            
+            // 隐藏sub-nav
+            subNav.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            subNav.style.opacity = '0';
+            subNav.style.transform = 'translateY(-30px) scale(0.9)';
+            
+            setTimeout(() => {
+                subNav.style.display = 'none';
+                
+                // 显示主界面
+                cover.style.display = 'block';
+                cover.style.opacity = '0';
+                cover.style.transform = 'scale(0.8) rotateY(-90deg)';
+                
+                setTimeout(() => {
+                    cover.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    cover.style.opacity = '1';
+                    cover.style.transform = 'scale(1) rotateY(0deg)';
+                }, 100);
+            }, 600);
+        }, 300);
+    });
+
+    // 点击弹窗背景关闭弹窗
+    logoModal.addEventListener('click', function(e) {
+        if (e.target === logoModal) {
+            logoModal.style.transition = 'all 0.3s ease-out';
+            logoModal.style.opacity = '0';
+            logoModal.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                logoModal.style.display = 'none';
+            }, 300);
+        }
+    });
+
+    confirmModal.addEventListener('click', function(e) {
+        if (e.target === confirmModal) {
+            confirmModal.style.transition = 'all 0.3s ease-out';
+            confirmModal.style.opacity = '0';
+            confirmModal.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                confirmModal.style.display = 'none';
+            }, 300);
+        }
+    });
 });
