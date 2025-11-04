@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     `;
     document.head.appendChild(style);
 
-    // 鼠标移动时创建粒子效果
+    // 鼠标移动时创建粒子效果（桌面端）
     let particleTimer;
     document.addEventListener('mousemove', (e) => {
         clearTimeout(particleTimer);
@@ -51,6 +51,17 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }, 50);
     });
+
+    // 触摸移动时创建粒子效果（移动端）
+    document.addEventListener('touchmove', (e) => {
+        clearTimeout(particleTimer);
+        particleTimer = setTimeout(() => {
+            if (Math.random() > 0.8 && e.touches.length > 0) {
+                const touch = e.touches[0];
+                createParticle(touch.clientX, touch.clientY);
+            }
+        }, 100);
+    }, { passive: true });
 
     const cover = document.getElementById('cover');
     const startBtn = document.getElementById('startBtn');

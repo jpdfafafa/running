@@ -1203,48 +1203,224 @@ input:focus, textarea:focus {
 /* 响应式设计 - 媒体查询 */
 /* 平板设备 */
 @media (max-width: 768px) {
+    /* 基础设置 */
+    body {
+        font-size: 15px;
+        overflow-x: hidden;
+    }
+    
+    /* 封面区域优化 */
     .cover {
-        padding: 60px 15px;
-        min-height: 300px;
+        padding: 50px 15px;
+        min-height: 320px;
+        border-radius: 0 0 40% 40% / 0 0 25px 25px;
     }
     
     .cover h1 {
-        font-size: 3rem;
-        letter-spacing: 4px;
+        font-size: 2.8rem;
+        letter-spacing: 3px;
+        margin: 15px 0;
+        line-height: 1.2;
     }
     
     .cover h2 {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
+        margin: 12px 0 25px 0;
+        line-height: 1.4;
     }
     
     .logo {
-        width: 100px;
+        width: 90px;
+        margin-bottom: 18px;
+        border-width: 2px;
+        padding: 6px;
     }
     
     #startBtn {
-        padding: 14px 40px;
-        font-size: 1.3rem;
+        padding: 15px 45px;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+        max-width: 280px;
+        width: 90%;
     }
     
+    /* 导航区域优化 */
     .sub-nav {
-        margin: 15px;
-        padding: 15px 20px;
+        margin: 15px 10px;
+        padding: 18px 20px;
+        position: relative;
+        top: 15px;
+        max-width: none;
+    }
+    
+    .logo-container {
+        margin-bottom: 18px;
+        gap: 12px;
+    }
+    
+    .sub-nav .logo {
+        width: 45px !important;
+        height: 45px !important;
+    }
+    
+    .brand-text {
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+    }
+    
+    .sub-nav div {
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
     }
     
     .sub-nav button {
-        padding: 12px 24px;
-        font-size: 1rem;
-        margin: 5px;
+        padding: 11px 22px;
+        font-size: 0.95rem;
+        margin: 4px;
+        min-width: 120px;
+        flex: 1 1 calc(50% - 24px);
+        max-width: 180px;
     }
     
+    /* 内容区域优化 */
     .content {
-        margin: 15px;
-        padding: 20px;
+        margin: 15px 10px;
+        padding: 22px;
+        max-width: none;
     }
     
     .pros-cons {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 18px;
+    }
+    
+    .pros-cons h2 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+    
+    .pros-cons ul li {
+        font-size: 0.95rem;
+        padding: 8px 0;
+        padding-left: 18px;
+        line-height: 1.5;
+    }
+    
+    /* 表单优化 */
+    .input-group {
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+    
+    input, textarea {
+        padding: 11px 14px;
+        font-size: 0.95rem;
+        border-radius: 10px;
+    }
+    
+    /* 弹窗优化 */
+    .login-box,
+    .register-box,
+    .more-box,
+    .logo-modal-content,
+    .confirm-modal-content {
+        margin: 15px;
+        padding: 25px;
+        min-width: auto;
+        width: calc(100vw - 30px);
+        max-width: 380px;
+        border-radius: 15px;
+    }
+    
+    .login-box h2,
+    .register-box h2 {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+    }
+    
+    .login-box input,
+    .register-box input {
+        padding: 10px 12px;
+        margin-bottom: 14px;
+        font-size: 0.95rem;
+        border-radius: 8px;
+    }
+    
+    .login-box button,
+    .register-box button {
+        padding: 10px 28px;
+        font-size: 1rem;
+        margin: 6px 0;
+        width: 100%;
+    }
+    
+    /* 更多服务弹窗 */
+    .more-box {
+        max-height: 85vh;
+        overflow-y: auto;
+    }
+    
+    .more-box img {
+        width: 180px !important;
+        height: auto;
+        max-width: 100%;
+    }
+    
+    .more-box h2 {
+        font-size: 1.3rem;
+        margin-top: 20px;
+    }
+    
+    .more-box p,
+    .more-box li {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+    
+    /* 记录和计划项 */
+    .record-item,
+    .plan-item {
+        padding: 18px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+    }
+    
+    .record-item h4,
+    .plan-item h4 {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+    }
+    
+    .record-item p,
+    .plan-item p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin: 6px 0;
+    }
+    
+    .delete-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+        top: 12px;
+        right: 12px;
+    }
+    
+    /* 浮动元素调整 */
+    .floating-circle {
+        width: 50px;
+        height: 50px;
+    }
+    
+    /* 滚动指示器 */
+    .scroll-indicator {
+        bottom: 25px;
+    }
+    
+    .scroll-arrow {
+        width: 18px;
+        height: 18px;
     }
 }
 
@@ -1473,6 +1649,7 @@ input:focus, textarea:focus {
         height: auto;
         display: block;
         margin: 0 auto;
+        object-fit: contain;
     }
     
     /* 特定图片处理 */
@@ -1490,6 +1667,148 @@ input:focus, textarea:focus {
     body {
         background-attachment: scroll;
         background-size: cover;
+        background-position: center;
+    }
+    
+    /* 防止内容溢出 */
+    * {
+        box-sizing: border-box;
+    }
+    
+    /* 优化滚动体验 */
+    html {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* 防止双击缩放 */
+    * {
+        touch-action: manipulation;
+    }
+    
+    /* 优化文本渲染 */
+    body {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        text-rendering: optimizeLegibility;
+    }
+    
+    /* 防止水平滚动 */
+    .cover,
+    .sub-nav,
+    .content,
+    .login-box,
+    .register-box,
+    .more-box {
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+    
+    /* 优化按钮在移动端的显示 */
+    button {
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+    
+    /* 优化输入框在移动端的显示 */
+    input, textarea {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* 防止弹窗内容溢出 */
+    .login-modal,
+    .register-modal,
+    .more-modal,
+    .logo-modal,
+    .confirm-modal {
+        padding: 10px;
+        overflow-x: hidden;
+    }
+    
+    /* 优化长文本显示 */
+    .pros-cons ul li,
+    .record-item p,
+    .plan-item p,
+    .more-box p,
+    .more-box li {
+        word-wrap: break-word;
+        word-break: break-word;
+        hyphens: auto;
+    }
+    
+    /* 优化表格和列表显示 */
+    ul, ol {
+        padding-left: 20px;
+        margin: 0;
+    }
+    
+    /* 优化链接点击区域 */
+    a {
+        display: inline-block;
+        padding: 2px 4px;
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    a:hover {
+        text-decoration: underline;
+    }
+    
+    /* 优化表单布局 */
+    form {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    
+    /* 优化日期输入框 */
+    input[type="date"] {
+        min-height: 44px;
+    }
+    
+    /* 优化数字输入框 */
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+    
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    
+    /* 优化滚动条样式 */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 3px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.5);
+    }
+    
+    /* 优化选择文本样式 */
+    ::selection {
+        background: rgba(76, 175, 80, 0.3);
+        color: #333;
+    }
+    
+    ::-moz-selection {
+        background: rgba(76, 175, 80, 0.3);
+        color: #333;
     }
 }
 
