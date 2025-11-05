@@ -7,7 +7,6 @@
 body {
     font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    /* 统一背景图样式，应用到主内容区 */
     background: url('22222.jpg') center/cover fixed;
     background-blend-mode: overlay;
     background-color: rgba(0, 0, 0, 0.2);
@@ -15,59 +14,26 @@ body {
     overflow-x: hidden;
 }
 
-/* 背景动画效果 - 只作用于背景，不影响内容 */
 @keyframes backgroundEffect {
-    0% {
-        background-size: 100% 100%;
-        background-color: rgba(0, 0, 0, 0.2);
-    }
-    25% {
-        background-size: 105% 105%;
-        background-color: rgba(0, 0, 0, 0.25);
-    }
-    50% {
-        background-size: 110% 110%;
-        background-color: rgba(0, 0, 0, 0.2);
-    }
-    75% {
-        background-size: 105% 105%;
-        background-color: rgba(0, 0, 0, 0.25);
-    }
-    100% {
-        background-size: 100% 100%;
-        background-color: rgba(0, 0, 0, 0.2);
-    }
+    0%, 100% { background-size: 100% 100%; background-color: rgba(0, 0, 0, 0.2); }
+    50% { background-size: 110% 110%; background-color: rgba(0, 0, 0, 0.25); }
 }
 
-/* 添加动态粒子背景 */
 body::before {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(255, 219, 98, 0.2) 0%, transparent 50%);
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
     animation: particleFloat 15s ease-in-out infinite;
     pointer-events: none;
     z-index: -1;
 }
 
 @keyframes particleFloat {
-    0%, 100% {
-        transform: translate(0, 0) rotate(0deg);
-        opacity: 0.7;
-    }
-    33% {
-        transform: translate(30px, -30px) rotate(120deg);
-        opacity: 0.9;
-    }
-    66% {
-        transform: translate(-20px, 20px) rotate(240deg);
-        opacity: 0.8;
-    }
+    0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.7; }
+    50% { transform: translate(30px, -30px) rotate(120deg); opacity: 0.9; }
 }
 
 /* 修改后的.cover样式 */
@@ -145,7 +111,7 @@ body::before {
 .logo {
     width: 120px;
     height: auto;
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
     border: 3px solid white;
     background: linear-gradient(45deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
     padding: 8px;
@@ -153,10 +119,8 @@ body::before {
     position: relative;
     z-index: 10;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    animation: logoFloat 3s ease-in-out infinite, logoGlow 2s ease-in-out infinite alternate;
+    animation: logoFloat 3s ease-in-out infinite;
     box-shadow: 0 5px 20px rgba(255,255,255,0.2);
 }
 
@@ -167,42 +131,15 @@ body::before {
     background: linear-gradient(45deg, rgba(76,175,80,0.3), rgba(33,150,243,0.3));
 }
 
-/* Logo 浮动动画 */
 @keyframes logoFloat {
-    0% {
-        transform: translateY(0px) rotate(0deg);
-    }
-    25% {
-        transform: translateY(-15px) rotate(5deg);
-    }
-    50% {
-        transform: translateY(-10px) rotate(-3deg);
-    }
-    75% {
-        transform: translateY(-5px) rotate(2deg);
-    }
-    100% {
-        transform: translateY(0px) rotate(0deg);
-    }
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(-3deg); }
 }
 
-@keyframes logoGlow {
-    0% {
-        filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
-    }
-    100% {
-        filter: drop-shadow(0 0 25px rgba(255,255,255,0.8));
-    }
-}
-
-/* Logo 周围的光环效果 */
 .logo::before {
     content: '';
     position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
+    top: -10px; left: -10px; right: -10px; bottom: -10px;
     border-radius: 20px;
     background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
     animation: logoRing 3s linear infinite;
@@ -210,17 +147,9 @@ body::before {
 }
 
 @keyframes logoRing {
-    0% {
-        transform: rotate(0deg);
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        transform: rotate(360deg);
-        opacity: 0;
-    }
+    0% { transform: rotate(0deg); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: rotate(360deg); opacity: 0; }
 }
 
 

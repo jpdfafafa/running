@@ -1,66 +1,56 @@
 // script.js
 document.addEventListener('DOMContentLoaded', function () {
-    // 添加页面加载动画
+    // 页面加载动画
     document.body.style.opacity = '0';
     setTimeout(() => {
         document.body.style.transition = 'opacity 1s ease-in-out';
         document.body.style.opacity = '1';
     }, 100);
 
-    // 添加鼠标跟随粒子效果
+    // 粒子效果
     const createParticle = (x, y) => {
         const particle = document.createElement('div');
-        particle.style.position = 'fixed';
-        particle.style.left = x + 'px';
-        particle.style.top = y + 'px';
-        particle.style.width = '4px';
-        particle.style.height = '4px';
-        particle.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
-        particle.style.borderRadius = '50%';
-        particle.style.pointerEvents = 'none';
-        particle.style.zIndex = '9999';
-        particle.style.animation = 'particleFade 1s ease-out forwards';
+        Object.assign(particle.style, {
+            position: 'fixed',
+            left: x + 'px',
+            top: y + 'px',
+            width: '4px',
+            height: '4px',
+            background: `hsl(${Math.random() * 360}, 70%, 60%)`,
+            borderRadius: '50%',
+            pointerEvents: 'none',
+            zIndex: '9999',
+            animation: 'particleFade 1s ease-out forwards'
+        });
         document.body.appendChild(particle);
-        
         setTimeout(() => particle.remove(), 1000);
     };
 
-    // 添加粒子淡出动画
+    // 添加粒子动画样式
     const style = document.createElement('style');
     style.textContent = `
         @keyframes particleFade {
-            0% {
-                transform: translate(0, 0) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) scale(0);
-                opacity: 0;
-            }
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) scale(0); opacity: 0; }
         }
     `;
     document.head.appendChild(style);
 
-    // 鼠标移动时创建粒子效果（桌面端）
+    // 粒子效果事件监听
     let particleTimer;
-    document.addEventListener('mousemove', (e) => {
+    const createParticleOnMove = (clientX, clientY, threshold = 0.9) => {
         clearTimeout(particleTimer);
         particleTimer = setTimeout(() => {
-            if (Math.random() > 0.9) {
-                createParticle(e.clientX, e.clientY);
-            }
+            if (Math.random() > threshold) createParticle(clientX, clientY);
         }, 50);
-    });
+    };
 
-    // 触摸移动时创建粒子效果（移动端）
+    document.addEventListener('mousemove', (e) => createParticleOnMove(e.clientX, e.clientY));
     document.addEventListener('touchmove', (e) => {
-        clearTimeout(particleTimer);
-        particleTimer = setTimeout(() => {
-            if (Math.random() > 0.8 && e.touches.length > 0) {
-                const touch = e.touches[0];
-                createParticle(touch.clientX, touch.clientY);
-            }
-        }, 100);
+        if (e.touches.length > 0) {
+            const touch = e.touches[0];
+            createParticleOnMove(touch.clientX, touch.clientY, 0.8);
+        }
     }, { passive: true });
 
     const cover = document.getElementById('cover');
