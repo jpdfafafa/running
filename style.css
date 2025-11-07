@@ -7,7 +7,7 @@
 body {
     font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    background: url('22222.jpg') center/cover fixed;
+    background: url('images/22222.jpg') center/cover fixed;
     background-blend-mode: overlay;
     background-color: rgba(0, 0, 0, 0.2);
     animation: backgroundEffect 20s ease-in-out infinite;
@@ -451,7 +451,7 @@ button:active::after {
 .login-modal {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: url('22222.jpg') center/cover;
+    background: url('images/22222.jpg') center/cover;
     background-blend-mode: overlay;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
@@ -508,7 +508,7 @@ button:active::after {
 .more-modal {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: url('22222.jpg') center/cover;
+    background: url('images/22222.jpg') center/cover;
     background-blend-mode: overlay;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
@@ -553,7 +553,9 @@ button:active::after {
 /* 让卡片内容更突出，防止透明导致内容难看清 */
 .sub-nav,
 .content,
-.login-box {
+.login-box,
+.register-box,
+.more-box {
     background: rgba(255,255,255,0.95);
     border-radius: 18px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.10);
@@ -808,7 +810,7 @@ input:focus, textarea:focus {
 .register-modal {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: url('22222.jpg') center/cover;
+    background: url('images/22222.jpg') center/cover;
     background-blend-mode: overlay;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
@@ -1701,12 +1703,19 @@ input:focus, textarea:focus {
     /* 优化数字输入框 */
     input[type="number"] {
         -moz-appearance: textfield;
+        appearance: textfield;
     }
     
     input[type="number"]::-webkit-outer-spin-button,
     input[type="number"]::-webkit-inner-spin-button {
         -webkit-appearance: none;
+        appearance: none;
         margin: 0;
+    }
+    
+    input[type="number"]::-moz-number-spin-box {
+        -moz-appearance: textfield;
+        appearance: textfield;
     }
     
     /* 优化滚动条样式 */
