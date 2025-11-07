@@ -1,9 +1,12 @@
-/* style.css */
+/* style.css - 跑步科学管理应用样式文件 */
+
+/* CSS变量定义 - 全局颜色主题 */
 :root {
-    --primary-color: #4CAF50;
-    --secondary-color: #2196F3;
+    --primary-color: #4CAF50;    /* 主色调：绿色 */
+    --secondary-color: #2196F3;  /* 辅助色调：蓝色 */
 }
 
+/* 页面主体样式 */
 body {
     font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
@@ -14,11 +17,19 @@ body {
     overflow-x: hidden;
 }
 
+/* 背景动画关键帧 */
 @keyframes backgroundEffect {
-    0%, 100% { background-size: 100% 100%; background-color: rgba(0, 0, 0, 0.2); }
-    50% { background-size: 110% 110%; background-color: rgba(0, 0, 0, 0.25); }
+    0%, 100% { 
+        background-size: 100% 100%;
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+    50% { 
+        background-size: 110% 110%;
+        background-color: rgba(0, 0, 0, 0.25);
+    }
 }
 
+/* 页面主体伪元素 */
 body::before {
     content: '';
     position: fixed;
@@ -31,18 +42,25 @@ body::before {
     z-index: -1;
 }
 
+/* 光晕浮动动画 */
 @keyframes particleFloat {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.7; }
-    50% { transform: translate(30px, -30px) rotate(120deg); opacity: 0.9; }
+    0%, 100% { 
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0.7;
+    }
+    50% { 
+        transform: translate(30px, -30px) rotate(120deg);
+        opacity: 0.9;
+    }
 }
 
-/* 修改后的.cover样式 */
+/* 主界面样式 */
 .cover {
     text-align: center;
     padding: 100px 20px;
     color: white;
     position: relative;
-    min-height: 400px; /* 根据图片调整高度 */
+    min-height: 400px;
     background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 100%);
     border-radius: 0 0 50% 50% / 0 0 20px 20px;
     backdrop-filter: blur(5px);
@@ -58,7 +76,7 @@ body::before {
     }
 }
 
-/* 美化标题字体 */
+/* 标题样式 */
 .cover h1 {
     font-size: 4rem;
     font-weight: 800;
@@ -105,9 +123,7 @@ body::before {
     }
 }
 
-
-
-/* Logo 动画效果 */
+/* Logo样式 */
 .logo {
     width: 120px;
     height: auto;
@@ -152,7 +168,7 @@ body::before {
     100% { transform: rotate(360deg); opacity: 0; }
 }
 
-
+/* 按钮基础样式 */
 button {
     padding: 12px 32px;
     font-size: 1.1rem;
@@ -234,7 +250,7 @@ button:active {
     left: 100%;
 }
 
-/* 提交按钮样式 */
+/* 表单按钮样式 */
 form button[type="submit"] {
     background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     box-shadow: 0 4px 15px rgba(79, 172, 254, 0.2);
@@ -265,314 +281,6 @@ form button[type="submit"]:hover {
     box-shadow: 0 4px 15px rgba(250, 112, 154, 0.2);
     color: #333;
     font-weight: 600;
-}
-
-/* 添加按钮点击波纹效果 */
-button::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 5px;
-    height: 5px;
-    background: rgba(255, 255, 255, 0.5);
-    opacity: 0;
-    border-radius: 100%;
-    transform: scale(1, 1) translate(-50%);
-    transform-origin: 50% 50%;
-}
-
-button:active::after {
-    animation: ripple 0.6s ease-out;
-}
-
-@keyframes ripple {
-    0% {
-        transform: scale(0, 0);
-        opacity: 0.5;
-    }
-    100% {
-        transform: scale(20, 20);
-        opacity: 0;
-    }
-}
-
-/* 关闭按钮样式 */
-#closeMore {
-    font-size: 24px;
-    color: #666;
-    background: none;
-    padding: 8px;
-    box-shadow: none;
-}
-
-#closeMore:hover {
-    color: #FF6B6B;
-    transform: rotate(90deg);
-    background: none;
-    box-shadow: none;
-}
-
-
-.pros-cons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-}
-
-@media (max-width: 600px) {
-    .pros-cons {
-        grid-template-columns: 1fr;
-    }
-}
-
-.input-group {
-    display: grid;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-
-/* 表单按钮美化 */
-#planForm button,
-#recordForm button {
-    padding: 10px 28px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 24px;
-    background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
-    color: #fff;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-    transition: background 0.3s, transform 0.2s;
-    margin-top: 12px;
-}
-
-#planForm button:hover,
-#recordForm button:hover {
-    background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
-    color: #333;
-    transform: translateY(-2px) scale(1.05);
-    font-weight: bold;
-}
-
-/* logo图标微调 */
-.sub-nav .logo {
-    width: 50px !important;
-    height: 50px !important;
-    margin: 0 !important;
-    display: block !important;
-}
-
-/* logo容器样式 */
-.logo-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-/* 品牌文字样式 */
-.brand-text {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #333;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    background: linear-gradient(45deg, #4CAF50, #2196F3);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: brandGlow 3s ease-in-out infinite alternate;
-}
-
-@keyframes brandGlow {
-    0% {
-        filter: drop-shadow(0 0 5px rgba(76,175,80,0.3));
-    }
-    100% {
-        filter: drop-shadow(0 0 15px rgba(33,150,243,0.5));
-    }
-}
-
-/* 选项界面卡片美化 */
-.sub-nav {
-    background: rgba(255,255,255,0.95);
-    border-radius: 18px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-    padding: 20px 30px;
-    max-width: 1200px;
-    margin: 20px auto 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    animation: fadeIn 0.6s;
-    position: sticky;
-    top: 20px;
-    z-index: 100;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(30px);}
-    to { opacity: 1; transform: translateY(0);}
-}
-
-.sub-nav .logo {
-    margin-bottom: 20px !important;
-    box-shadow: 0 2px 8px rgba(76,175,80,0.08);
-}
-
-.sub-nav div {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    align-items: center;
-    flex: 1;
-    justify-content: center;
-}
-
-.sub-nav button {
-    margin: 0;
-    font-size: 1.15rem;
-    letter-spacing: 1px;
-    font-weight: 500;
-    box-shadow: 0 2px 8px rgba(33,150,243,0.08);
-    transition: box-shadow 0.2s, background 0.3s, transform 0.2s;
-}
-
-.sub-nav button:hover,
-.sub-nav button.active {
-    box-shadow: 0 4px 16px rgba(250,112,154,0.15);
-    transform: scale(1.04);
-}
-
-/* 登录弹窗样式 */
-.login-modal {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url('images/22222.jpg') center/cover;
-    background-blend-mode: overlay;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-}
-
-.login-box {
-    background: rgba(255,255,255,0.95);
-    border-radius: 18px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-    padding: 32px 28px;
-    min-width: 280px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.login-box h2 {
-    margin-bottom: 18px;
-    color: #4CAF50;
-}
-
-.login-box input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 16px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-}
-
-.login-box button {
-    padding: 10px 32px;
-    border: none;
-    border-radius: 24px;
-    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-    color: #fff;
-    font-size: 1.1rem;
-    cursor: pointer;
-    font-weight: bold;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-    transition: background 0.3s, transform 0.2s;
-}
-
-.login-box button:hover {
-    background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
-    color: #333;
-    transform: scale(1.05);
-}
-
-/* 更多服务弹窗样式 */
-.more-modal {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url('images/22222.jpg') center/cover;
-    background-blend-mode: overlay;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-}
-
-.more-box {
-    background: rgba(255,255,255,0.97);
-    border-radius: 18px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-    padding: 32px 28px;
-    min-width: 320px;
-    max-width: 90vw;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-}
-
-.more-box h2 {
-    margin-top: 0;
-    color: #2196F3;
-}
-
-.more-box #closeMore {
-    position: absolute;
-    top: 12px;
-    right: 18px;
-    font-size: 2rem;
-    color: #888;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 10;
-    transition: color 0.2s;
-}
-.more-box #closeMore:hover {
-    color: #fa709a;
-}
-
-/* 让卡片内容更突出，防止透明导致内容难看清 */
-.sub-nav,
-.content,
-.login-box,
-.register-box,
-.more-box {
-    background: rgba(255,255,255,0.95);
-    border-radius: 18px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-}
-
-/* 可选：main区域居中显示 */
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 60vh;
-    padding-bottom: 40px;
-}
-
-* {
-    backface-visibility: hidden;
-    -webkit-font-smoothing: antialiased;
 }
 
 /* 浮动元素样式 */
@@ -667,144 +375,63 @@ main {
     }
 }
 
-/* 增强内容模块动画 */
-.content {
-    display: none;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 30px;
+/* 登录弹窗样式 */
+.login-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('images/22222.jpg') center/cover;
+    background-blend-mode: overlay;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.login-box {
     background: rgba(255,255,255,0.95);
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    position: relative;
-    transform: translateZ(0);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 32px 28px;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.content:hover {
-    transform: translateZ(50px) scale(1.02);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+.login-box h2 {
+    margin-bottom: 18px;
+    color: #4CAF50;
 }
 
-.content.active {
-    display: block;
-    animation: contentSlideIn 0.6s ease-out;
-}
-
-@keyframes contentSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* 美化列表项 */
-.pros-cons ul li {
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-    position: relative;
-    padding-left: 20px;
-}
-
-.pros-cons ul li::before {
-    content: '▸';
-    position: absolute;
-    left: 0;
-    color: var(--primary-color);
-    transition: transform 0.3s ease;
-}
-
-.pros-cons ul li:hover {
-    padding-left: 25px;
-    color: var(--primary-color);
-    background: rgba(76,175,80,0.05);
-    border-radius: 5px;
-}
-
-.pros-cons ul li:hover::before {
-    transform: translateX(5px);
-}
-
-/* 增强表单输入框样式 */
-input, textarea {
-    padding: 12px 16px;
-    border: 2px solid rgba(0,0,0,0.1);
-    border-radius: 12px;
+.login-box input {
     width: 100%;
-    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     font-size: 1rem;
-    transition: all 0.3s ease;
-    background: rgba(255,255,255,0.8);
-    backdrop-filter: blur(5px);
 }
 
-input:focus, textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(76,175,80,0.1);
-    transform: translateY(-2px);
-    background: rgba(255,255,255,0.95);
+.login-box button {
+    padding: 10px 32px;
+    border: none;
+    border-radius: 24px;
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    transition: background 0.3s, transform 0.2s;
+    margin: 5px;
 }
 
-/* 记录项样式 */
-.record-item {
-    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    border-left: 4px solid var(--primary-color);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+.login-box button:hover {
+    background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
+    color: #333;
+    transform: scale(1.05);
 }
-
-.record-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(76,175,80,0.1), transparent);
-    transition: left 0.5s ease;
-}
-
-.record-item:hover::before {
-    left: 100%;
-}
-
-.record-item:hover {
-    transform: translateX(5px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-}
-
-.record-item h4 {
-    margin: 0 0 10px 0;
-    color: var(--primary-color);
-    font-size: 1.2rem;
-}
-
-.record-item p {
-    margin: 5px 0;
-    color: #666;
-    line-height: 1.6;
-}
-
-/* 确保图片不受滤镜影响 */
-.more-box img,
-.login-box img {
-    filter: none !important;
-    -webkit-filter: none !important;
-}
-
 
 /* 注册弹窗样式 */
 .register-modal {
@@ -872,7 +499,7 @@ input:focus, textarea:focus {
     background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
 }
 
-/* 登录框中的注册按钮样式 */
+/* 登录框中的注册按钮 */
 .login-box #registerBtn {
     background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
     margin-top: 10px;
@@ -883,128 +510,121 @@ input:focus, textarea:focus {
     background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
 }
 
-/* 确保弹窗内容不受背景动画影响 */
-.login-box,
-.register-box,
-.more-box {
-    isolation: isolate;
+/* 导航栏样式 */
+.sub-nav {
+    background: rgba(255,255,255,0.95);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 20px 30px;
+    max-width: 1200px;
+    margin: 20px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 0.6s;
+    position: sticky;
+    top: 20px;
+    z-index: 100;
 }
 
-/* 删除按钮样式 */
-.delete-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 30px;
-    height: 30px;
-    border: none;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ff6b6b, #ff8e53);
-    color: white;
-    cursor: pointer;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+/* Logo容器样式 */
+.logo-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
-    opacity: 0.8;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
-.delete-btn:hover {
-    opacity: 1;
-    transform: scale(1.1) rotate(90deg);
-    background: linear-gradient(135deg, #ff8e53, #ff6b6b);
-    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.5);
+.sub-nav .logo {
+    width: 50px !important;
+    height: 50px !important;
+    margin: 0 !important;
+    display: block !important;
 }
 
-.delete-btn:active {
-    transform: scale(0.95) rotate(90deg);
+/* 品牌文字样式 */
+.brand-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, #4CAF50, #2196F3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: brandGlow 3s ease-in-out infinite alternate;
 }
 
-.delete-btn span {
-    display: block;
-    line-height: 1;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+@keyframes brandGlow {
+    0% {
+        filter: drop-shadow(0 0 5px rgba(76,175,80,0.3));
+    }
+    100% {
+        filter: drop-shadow(0 0 15px rgba(33,150,243,0.5));
+    }
 }
 
-/* 记录项和计划项的相对定位 */
-.record-item,
-.plan-item {
+.sub-nav div {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+}
+
+/* 更多服务弹窗样式 */
+.more-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('images/22222.jpg') center/cover;
+    background-blend-mode: overlay;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.more-box {
+    background: rgba(255,255,255,0.97);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 32px 28px;
+    min-width: 320px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
     position: relative;
-    padding-right: 50px;
 }
 
-.record-content,
-.plan-content-wrapper {
-    padding-right: 10px;
+.more-box h2 {
+    margin-top: 0;
+    color: #2196F3;
 }
 
-/* 计划项样式 */
-.plan-item {
-    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    border-left: 4px solid var(--secondary-color);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.plan-item::before {
-    content: '';
+.more-box #closeMore {
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(33,150,243,0.1), transparent);
-    transition: left 0.5s ease;
-}
-
-.plan-item:hover::before {
-    left: 100%;
-}
-
-.plan-item:hover {
-    transform: translateX(5px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-}
-
-.plan-item h4 {
-    margin: 0 0 10px 0;
-    color: var(--secondary-color);
-    font-size: 1.2rem;
-}
-
-.plan-item p {
-    margin: 5px 0;
-    color: #666;
-    line-height: 1.6;
-}
-
-.plan-item .plan-content {
-    margin: 10px 0;
-    padding: 10px;
-    background: rgba(33,150,243,0.05);
-    border-radius: 8px;
-    border-left: 3px solid var(--secondary-color);
-}
-
-.plan-item .plan-comment {
-    font-style: italic;
+    top: 12px;
+    right: 18px;
+    font-size: 2rem;
     color: #888;
-    font-size: 0.9rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    transition: color 0.2s;
 }
 
-.plan-item small {
-    color: #999;
-    font-size: 0.8rem;
-    display: block;
-    margin-top: 10px;
+.more-box #closeMore:hover {
+    color: #fa709a;
 }
 
 /* Logo点击弹窗样式 */
@@ -1038,36 +658,6 @@ input:focus, textarea:focus {
     display: flex;
     gap: 16px;
     justify-content: center;
-}
-
-.modal-btn {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 24px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 100px;
-}
-
-.modal-btn:not(.logout-btn) {
-    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-    color: #fff;
-}
-
-.modal-btn:not(.logout-btn):hover {
-    background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
-    transform: translateY(-2px);
-}
-
-.modal-btn.logout-btn {
-    background: linear-gradient(90deg, #ff6b6b 0%, #ff8e53 100%);
-    color: #fff;
-}
-
-.modal-btn.logout-btn:hover {
-    background: linear-gradient(90deg, #ff8e53 0%, #ff6b6b 100%);
-    transform: translateY(-2px);
 }
 
 /* 注销确认弹窗样式 */
@@ -1120,6 +710,295 @@ input:focus, textarea:focus {
     }
 }
 
+/* 模态按钮样式 */
+.modal-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+}
+
+.modal-btn:not(.logout-btn) {
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    color: #fff;
+}
+
+.modal-btn:not(.logout-btn):hover {
+    background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+    transform: translateY(-2px);
+}
+
+.modal-btn.logout-btn {
+    background: linear-gradient(90deg, #ff6b6b 0%, #ff8e53 100%);
+    color: #fff;
+}
+
+.modal-btn.logout-btn:hover {
+    background: linear-gradient(90deg, #ff8e53 0%, #ff6b6b 100%);
+    transform: translateY(-2px);
+}
+
+/* 内容区域样式 */
+.content {
+    display: none;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 30px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    position: relative;
+    transform: translateZ(0);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.content:hover {
+    transform: translateZ(50px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.content.active {
+    display: block;
+    animation: contentSlideIn 0.6s ease-out;
+}
+
+@keyframes contentSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 跑步科普样式 */
+.pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.pros-cons ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    padding-left: 20px;
+}
+
+.pros-cons ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.pros-cons ul li:hover {
+    padding-left: 25px;
+    color: var(--primary-color);
+    background: rgba(76,175,80,0.05);
+    border-radius: 5px;
+}
+
+.pros-cons ul li:hover::before {
+    transform: translateX(5px);
+}
+
+/* 表单样式 */
+.input-group {
+    display: grid;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+input, textarea {
+    padding: 12px 16px;
+    border: 2px solid rgba(0,0,0,0.1);
+    border-radius: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(5px);
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(76,175,80,0.1);
+    transform: translateY(-2px);
+    background: rgba(255,255,255,0.95);
+}
+
+/* 记录项样式 */
+.record-item {
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border-left: 4px solid var(--primary-color);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    padding-right: 50px;
+}
+
+.record-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(76,175,80,0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.record-item:hover::before {
+    left: 100%;
+}
+
+.record-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.record-item h4 {
+    margin: 0 0 10px 0;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.record-item p {
+    margin: 5px 0;
+    color: #666;
+    line-height: 1.6;
+}
+
+.record-content {
+    padding-right: 10px;
+}
+
+/* 计划项样式 */
+.plan-item {
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border-left: 4px solid var(--secondary-color);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    padding-right: 50px;
+}
+
+.plan-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(33,150,243,0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.plan-item:hover::before {
+    left: 100%;
+}
+
+.plan-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.plan-item h4 {
+    margin: 0 0 10px 0;
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+}
+
+.plan-item p {
+    margin: 5px 0;
+    color: #666;
+    line-height: 1.6;
+}
+
+.plan-content-wrapper {
+    padding-right: 10px;
+}
+
+.plan-item .plan-content {
+    margin: 10px 0;
+    padding: 10px;
+    background: rgba(33,150,243,0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--secondary-color);
+}
+
+.plan-item .plan-comment {
+    font-style: italic;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.plan-item small {
+    color: #999;
+    font-size: 0.8rem;
+    display: block;
+    margin-top: 10px;
+}
+
+/* 删除按钮样式 */
+.delete-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+    opacity: 0.8;
+}
+
+.delete-btn:hover {
+    opacity: 1;
+    transform: scale(1.1) rotate(90deg);
+    background: linear-gradient(135deg, #ff8e53, #ff6b6b);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.5);
+}
+
+.delete-btn:active {
+    transform: scale(0.95) rotate(90deg);
+}
+
+.delete-btn span {
+    display: block;
+    line-height: 1;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
 /* Logo点击提示 */
 .sub-nav .logo-container .logo {
     cursor: pointer;
@@ -1131,16 +1010,13 @@ input:focus, textarea:focus {
     filter: brightness(1.2);
 }
 
-/* 响应式设计 - 媒体查询 */
-/* 平板设备 */
+/* 响应式设计 */
 @media (max-width: 768px) {
-    /* 基础设置 */
     body {
         font-size: 15px;
         overflow-x: hidden;
     }
     
-    /* 封面区域优化 */
     .cover {
         padding: 50px 15px;
         min-height: 320px;
@@ -1175,7 +1051,6 @@ input:focus, textarea:focus {
         width: 90%;
     }
     
-    /* 导航区域优化 */
     .sub-nav {
         margin: 15px 10px;
         padding: 18px 20px;
@@ -1214,7 +1089,6 @@ input:focus, textarea:focus {
         max-width: 180px;
     }
     
-    /* 内容区域优化 */
     .content {
         margin: 15px 10px;
         padding: 22px;
@@ -1238,7 +1112,6 @@ input:focus, textarea:focus {
         line-height: 1.5;
     }
     
-    /* 表单优化 */
     .input-group {
         gap: 12px;
         margin-bottom: 18px;
@@ -1250,7 +1123,6 @@ input:focus, textarea:focus {
         border-radius: 10px;
     }
     
-    /* 弹窗优化 */
     .login-box,
     .register-box,
     .more-box,
@@ -1286,7 +1158,6 @@ input:focus, textarea:focus {
         width: 100%;
     }
     
-    /* 更多服务弹窗 */
     .more-box {
         max-height: 85vh;
         overflow-y: auto;
@@ -1309,7 +1180,6 @@ input:focus, textarea:focus {
         line-height: 1.6;
     }
     
-    /* 记录和计划项 */
     .record-item,
     .plan-item {
         padding: 18px;
@@ -1338,13 +1208,11 @@ input:focus, textarea:focus {
         right: 12px;
     }
     
-    /* 浮动元素调整 */
     .floating-circle {
         width: 50px;
         height: 50px;
     }
     
-    /* 滚动指示器 */
     .scroll-indicator {
         bottom: 25px;
     }
@@ -1355,14 +1223,11 @@ input:focus, textarea:focus {
     }
 }
 
-/* 手机设备 */
 @media (max-width: 480px) {
-    /* 基础设置 */
     body {
         font-size: 14px;
     }
     
-    /* 封面区域 */
     .cover {
         padding: 40px 10px;
         min-height: 250px;
@@ -1393,7 +1258,6 @@ input:focus, textarea:focus {
         letter-spacing: 1px;
     }
     
-    /* 导航区域 */
     .sub-nav {
         margin: 10px;
         padding: 15px;
@@ -1430,7 +1294,6 @@ input:focus, textarea:focus {
         max-width: 200px;
     }
     
-    /* 内容区域 */
     .content {
         margin: 10px;
         padding: 15px;
@@ -1451,7 +1314,6 @@ input:focus, textarea:focus {
         padding-left: 15px;
     }
     
-    /* 表单样式 */
     .input-group {
         gap: 10px;
     }
@@ -1461,7 +1323,6 @@ input:focus, textarea:focus {
         font-size: 0.9rem;
     }
     
-    /* 弹窗样式 */
     .login-box,
     .register-box,
     .more-box,
@@ -1492,7 +1353,6 @@ input:focus, textarea:focus {
         font-size: 1rem;
     }
     
-    /* 更多服务弹窗 */
     .more-box {
         max-height: 80vh;
     }
@@ -1502,7 +1362,6 @@ input:focus, textarea:focus {
         height: auto;
     }
     
-    /* 记录和计划项 */
     .record-item,
     .plan-item {
         padding: 15px;
@@ -1527,13 +1386,11 @@ input:focus, textarea:focus {
         right: 10px;
     }
     
-    /* 浮动元素调整 */
     .floating-circle {
         width: 40px;
         height: 40px;
     }
     
-    /* 滚动指示器 */
     .scroll-indicator {
         bottom: 20px;
     }
@@ -1544,7 +1401,6 @@ input:focus, textarea:focus {
     }
 }
 
-/* 超小屏幕设备 */
 @media (max-width: 320px) {
     .cover h1 {
         font-size: 1.8rem;
@@ -1573,7 +1429,7 @@ input:focus, textarea:focus {
     }
 }
 
-/* 确保图片在移动设备上正确显示 */
+/* 移动设备优化 */
 @media (max-width: 768px) {
     img {
         max-width: 100%;
@@ -1583,7 +1439,6 @@ input:focus, textarea:focus {
         object-fit: contain;
     }
     
-    /* 特定图片处理 */
     .logo {
         max-width: 120px;
         height: auto;
@@ -1594,37 +1449,31 @@ input:focus, textarea:focus {
         height: auto;
     }
     
-    /* 背景图片优化 */
     body {
         background-attachment: scroll;
         background-size: cover;
         background-position: center;
     }
     
-    /* 防止内容溢出 */
     * {
         box-sizing: border-box;
     }
     
-    /* 优化滚动体验 */
     html {
         scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
     }
     
-    /* 防止双击缩放 */
     * {
         touch-action: manipulation;
     }
     
-    /* 优化文本渲染 */
     body {
         -webkit-text-size-adjust: 100%;
         -ms-text-size-adjust: 100%;
         text-rendering: optimizeLegibility;
     }
     
-    /* 防止水平滚动 */
     .cover,
     .sub-nav,
     .content,
@@ -1635,14 +1484,12 @@ input:focus, textarea:focus {
         overflow-x: hidden;
     }
     
-    /* 优化按钮在移动端的显示 */
     button {
         -webkit-tap-highlight-color: transparent;
         user-select: none;
         -webkit-user-select: none;
     }
     
-    /* 优化输入框在移动端的显示 */
     input, textarea {
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -1650,7 +1497,6 @@ input:focus, textarea:focus {
         -webkit-tap-highlight-color: transparent;
     }
     
-    /* 防止弹窗内容溢出 */
     .login-modal,
     .register-modal,
     .more-modal,
@@ -1660,7 +1506,6 @@ input:focus, textarea:focus {
         overflow-x: hidden;
     }
     
-    /* 优化长文本显示 */
     .pros-cons ul li,
     .record-item p,
     .plan-item p,
@@ -1671,13 +1516,11 @@ input:focus, textarea:focus {
         hyphens: auto;
     }
     
-    /* 优化表格和列表显示 */
     ul, ol {
         padding-left: 20px;
         margin: 0;
     }
     
-    /* 优化链接点击区域 */
     a {
         display: inline-block;
         padding: 2px 4px;
@@ -1689,18 +1532,15 @@ input:focus, textarea:focus {
         text-decoration: underline;
     }
     
-    /* 优化表单布局 */
     form {
         max-width: 100%;
         margin: 0 auto;
     }
     
-    /* 优化日期输入框 */
     input[type="date"] {
         min-height: 44px;
     }
     
-    /* 优化数字输入框 */
     input[type="number"] {
         -moz-appearance: textfield;
         appearance: textfield;
@@ -1718,7 +1558,6 @@ input:focus, textarea:focus {
         appearance: textfield;
     }
     
-    /* 优化滚动条样式 */
     ::-webkit-scrollbar {
         width: 6px;
         height: 6px;
@@ -1738,7 +1577,6 @@ input:focus, textarea:focus {
         background: rgba(0, 0, 0, 0.5);
     }
     
-    /* 优化选择文本样式 */
     ::selection {
         background: rgba(76, 175, 80, 0.3);
         color: #333;
@@ -1750,7 +1588,6 @@ input:focus, textarea:focus {
     }
 }
 
-/* 横屏模式优化 */
 @media (max-width: 768px) and (orientation: landscape) {
     .cover {
         padding: 30px 15px;
@@ -1770,7 +1607,6 @@ input:focus, textarea:focus {
     }
 }
 
-/* 触摸设备优化 */
 @media (hover: none) and (pointer: coarse) {
     button:hover {
         transform: none;
@@ -1785,7 +1621,6 @@ input:focus, textarea:focus {
         transform: none;
     }
     
-    /* 增加触摸目标大小 */
     button {
         min-height: 44px;
         min-width: 44px;
